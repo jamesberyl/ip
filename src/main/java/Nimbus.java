@@ -70,7 +70,6 @@ public class Nimbus {
                     System.out.println("____________________________________________________________");
                 }
             } else {
-                // Add a new task
                 if (taskCount < 100) {
                     tasks[taskCount] = new Task(userInput);
                     taskCount++;
