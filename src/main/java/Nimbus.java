@@ -75,7 +75,6 @@ public class Nimbus {
                     taskCount++;
                     System.out.println("____________________________________________________________");
                     System.out.println(" Got it! I’ve added: \"" + userInput + "\" to your task list.");
-                    System.out.println(" What else do you need?");
                     System.out.println("____________________________________________________________");
                 } else {
                     System.out.println("____________________________________________________________");
