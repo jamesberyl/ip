@@ -7,13 +7,13 @@ public class Nimbus {
         System.out.println(" How can I make your day brighter?");
         System.out.println("____________________________________________________________");
 
-        String[] tasks = new String[100];
+        Task[] tasks = new Task[100];
         int taskCount = 0;
         Scanner scanner = new Scanner(System.in);
         String userInput;
 
         while (true) {
-            userInput = scanner.nextLine().trim(); // Read user input
+            userInput = scanner.nextLine().trim();
 
             if (userInput.equalsIgnoreCase("bye")) {
                 System.out.println("____________________________________________________________");
@@ -25,29 +25,67 @@ public class Nimbus {
                 if (taskCount == 0) {
                     System.out.println(" Hmm... Your task list is empty. Ready to add something?");
                 } else {
-                    System.out.println(" Here’s what you’ve got so far:");
+                    System.out.println(" Here are the tasks in your list:");
                     for (int i = 0; i < taskCount; i++) {
                         System.out.println(" " + (i + 1) + ". " + tasks[i]);
                     }
                 }
                 System.out.println("____________________________________________________________");
+            } else if (userInput.startsWith("mark")) {
+                try {
+                    int taskNumber = Integer.parseInt(userInput.split(" ")[1]) - 1;
+                    if (taskNumber >= 0 && taskNumber < taskCount) {
+                        tasks[taskNumber].markAsDone();
+                        System.out.println("____________________________________________________________");
+                        System.out.println(" Nice! I've marked this task as done:");
+                        System.out.println("   " + tasks[taskNumber]);
+                        System.out.println("____________________________________________________________");
+                    } else {
+                        System.out.println("____________________________________________________________");
+                        System.out.println(" Invalid task number. Please try again.");
+                        System.out.println("____________________________________________________________");
+                    }
+                } catch (Exception e) {
+                    System.out.println("____________________________________________________________");
+                    System.out.println(" Please specify a valid task number to mark.");
+                    System.out.println("____________________________________________________________");
+                }
+            } else if (userInput.startsWith("unmark")) {
+                try {
+                    int taskNumber = Integer.parseInt(userInput.split(" ")[1]) - 1;
+                    if (taskNumber >= 0 && taskNumber < taskCount) {
+                        tasks[taskNumber].unmark();
+                        System.out.println("____________________________________________________________");
+                        System.out.println(" OK, I've marked this task as not done yet:");
+                        System.out.println("   " + tasks[taskNumber]);
+                        System.out.println("____________________________________________________________");
+                    } else {
+                        System.out.println("____________________________________________________________");
+                        System.out.println(" Invalid task number. Please try again.");
+                        System.out.println("____________________________________________________________");
+                    }
+                } catch (Exception e) {
+                    System.out.println("____________________________________________________________");
+                    System.out.println(" Please specify a valid task number to unmark.");
+                    System.out.println("____________________________________________________________");
+                }
             } else {
-                // Add the task to the array and increment the task counter
+                // Add a new task
                 if (taskCount < 100) {
-                    tasks[taskCount] = userInput;
+                    tasks[taskCount] = new Task(userInput);
                     taskCount++;
                     System.out.println("____________________________________________________________");
-                    System.out.println(" Got it! I’ve added: \"" + userInput + "\" to your task list. ");
+                    System.out.println(" Got it! I’ve added: \"" + userInput + "\" to your task list.");
                     System.out.println(" What else do you need?");
                     System.out.println("____________________________________________________________");
                 } else {
                     System.out.println("____________________________________________________________");
-                    System.out.println(" Uh oh! Your task list is full. ");
+                    System.out.println(" Uh oh! Your task list is full.");
                     System.out.println("____________________________________________________________");
                 }
             }
         }
 
-        scanner.close(); // Close the scanner
+        scanner.close();
     }
 }
