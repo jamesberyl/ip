@@ -31,6 +31,38 @@ public class Nimbus {
                     }
                 }
                 System.out.println("____________________________________________________________");
+            } else if (userInput.startsWith("todo")) {
+                String description = userInput.substring(5).trim();
+                tasks[taskCount] = new Todo(description);
+                taskCount++;
+                System.out.println("____________________________________________________________");
+                System.out.println(" Got it. I've added this task:");
+                System.out.println("   " + tasks[taskCount - 1]);
+                System.out.println(" Now you have " + taskCount + " tasks in the list.");
+                System.out.println("____________________________________________________________");
+            } else if (userInput.startsWith("deadline")) {
+                String[] parts = userInput.substring(9).split(" /by ");
+                String description = parts[0].trim();
+                String by = parts.length > 1 ? parts[1].trim() : "No deadline specified";
+                tasks[taskCount] = new Deadline(description, by);
+                taskCount++;
+                System.out.println("____________________________________________________________");
+                System.out.println(" Got it. I've added this task:");
+                System.out.println("   " + tasks[taskCount - 1]);
+                System.out.println(" Now you have " + taskCount + " tasks in the list.");
+                System.out.println("____________________________________________________________");
+            } else if (userInput.startsWith("event")) {
+                String[] parts = userInput.substring(6).split(" /from | /to ");
+                String description = parts[0].trim();
+                String from = parts.length > 1 ? parts[1].trim() : "No start time specified";
+                String to = parts.length > 2 ? parts[2].trim() : "No end time specified";
+                tasks[taskCount] = new Event(description, from, to);
+                taskCount++;
+                System.out.println("____________________________________________________________");
+                System.out.println(" Got it. I've added this task:");
+                System.out.println("   " + tasks[taskCount - 1]);
+                System.out.println(" Now you have " + taskCount + " tasks in the list.");
+                System.out.println("____________________________________________________________");
             } else if (userInput.startsWith("mark")) {
                 try {
                     int taskNumber = Integer.parseInt(userInput.split(" ")[1]) - 1;
@@ -70,17 +102,9 @@ public class Nimbus {
                     System.out.println("____________________________________________________________");
                 }
             } else {
-                if (taskCount < 100) {
-                    tasks[taskCount] = new Task(userInput);
-                    taskCount++;
-                    System.out.println("____________________________________________________________");
-                    System.out.println(" Got it! I’ve added: \"" + userInput + "\" to your task list.");
-                    System.out.println("____________________________________________________________");
-                } else {
-                    System.out.println("____________________________________________________________");
-                    System.out.println(" Uh oh! Your task list is full.");
-                    System.out.println("____________________________________________________________");
-                }
+                System.out.println("____________________________________________________________");
+                System.out.println(" I'm sorry, I don't understand that command. 😕");
+                System.out.println("____________________________________________________________");
             }
         }
 
