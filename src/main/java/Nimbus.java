@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Nimbus {
@@ -8,8 +9,7 @@ public class Nimbus {
         System.out.println(" How can I make your day brighter?");
         System.out.println("____________________________________________________________");
 
-        Task[] tasks = new Task[100];
-        int taskCount = 0;
+        ArrayList<Task> tasks = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
@@ -29,12 +29,12 @@ public class Nimbus {
                     break;
                 } else if (userInput.equalsIgnoreCase("list")) {
                     System.out.println("____________________________________________________________");
-                    if (taskCount == 0) {
+                    if (tasks.isEmpty()) {
                         System.out.println(" Hmm... Your task list is empty. Ready to add something?");
                     } else {
                         System.out.println(" Here are the tasks in your list:");
-                        for (int i = 0; i < taskCount; i++) {
-                            System.out.println(" " + (i + 1) + ". " + tasks[i]);
+                        for (int i = 0; i < tasks.size(); i++) {
+                            System.out.println(" " + (i + 1) + ". " + tasks.get(i));
                         }
                     }
                     System.out.println("____________________________________________________________");
@@ -43,50 +43,55 @@ public class Nimbus {
                         throw new NimbusException("Oops! The description of a todo cannot be empty.");
                     }
                     String description = userInput.substring(5).trim();
-                    tasks[taskCount] = new Todo(description);
-                    taskCount++;
+                    tasks.add(new Todo(description));
                     System.out.println("____________________________________________________________");
                     System.out.println(" Got it. I've added this task:");
-                    System.out.println("   " + tasks[taskCount - 1]);
-                    System.out.println(" Now you have " + taskCount + " tasks in the list.");
+                    System.out.println("   " + tasks.get(tasks.size() - 1));
+                    System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
                     System.out.println("____________________________________________________________");
                 } else if (userInput.startsWith("deadline")) {
-                    if (userInput.length() <= 9 || !userInput.contains("/by")) { // Validate format and presence of `/by`
+                    if (userInput.length() <= 9 || !userInput.contains("/by")) {
                         throw new NimbusException("Oops! Deadlines need a description and a '/by' date. Example: deadline Submit report /by Monday.");
                     }
                     String[] parts = userInput.substring(9).split(" /by ");
-                    tasks[taskCount] = new Deadline(parts[0].trim(), parts[1].trim());
-                    taskCount++;
+                    tasks.add(new Deadline(parts[0].trim(), parts[1].trim()));
                     System.out.println("____________________________________________________________");
                     System.out.println(" Got it. I've added this task:");
-                    System.out.println("   " + tasks[taskCount - 1]);
-                    System.out.println(" Now you have " + taskCount + " tasks in the list.");
+                    System.out.println("   " + tasks.get(tasks.size() - 1));
+                    System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
                     System.out.println("____________________________________________________________");
                 } else if (userInput.startsWith("event")) {
-                    if (userInput.length() <= 6 || (!userInput.contains("/from") || !userInput.contains("/to"))) { // Validate format and presence of `/from` and `/to`
+                    if (userInput.length() <= 6 || (!userInput.contains("/from") || !userInput.contains("/to"))) {
                         throw new NimbusException("Oops! Events need a description, '/from' time, and '/to' time. Example: event Team meeting /from 2pm /to 4pm.");
                     }
                     String[] parts = userInput.substring(6).split(" /from | /to ");
-                    tasks[taskCount] = new Event(parts[0].trim(), parts[1].trim(), parts[2].trim());
-                    taskCount++;
+                    tasks.add(new Event(parts[0].trim(), parts[1].trim(), parts[2].trim()));
                     System.out.println("____________________________________________________________");
                     System.out.println(" Got it. I've added this task:");
-                    System.out.println("   " + tasks[taskCount - 1]);
-                    System.out.println(" Now you have " + taskCount + " tasks in the list.");
+                    System.out.println("   " + tasks.get(tasks.size() - 1));
+                    System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
                     System.out.println("____________________________________________________________");
                 } else if (userInput.startsWith("mark")) {
-                    int taskNumber = parseTaskNumber(userInput, taskCount);
-                    tasks[taskNumber].markAsDone();
+                    int taskNumber = parseTaskNumber(userInput, tasks.size());
+                    tasks.get(taskNumber).markAsDone();
                     System.out.println("____________________________________________________________");
                     System.out.println(" Nice! I've marked this task as done:");
-                    System.out.println("   " + tasks[taskNumber]);
+                    System.out.println("   " + tasks.get(taskNumber));
                     System.out.println("____________________________________________________________");
                 } else if (userInput.startsWith("unmark")) {
-                    int taskNumber = parseTaskNumber(userInput, taskCount);
-                    tasks[taskNumber].unmark();
+                    int taskNumber = parseTaskNumber(userInput, tasks.size());
+                    tasks.get(taskNumber).unmark();
                     System.out.println("____________________________________________________________");
                     System.out.println(" OK, I've marked this task as not done yet:");
-                    System.out.println("   " + tasks[taskNumber]);
+                    System.out.println("   " + tasks.get(taskNumber));
+                    System.out.println("____________________________________________________________");
+                } else if (userInput.startsWith("delete")) {
+                    int taskNumber = parseTaskNumber(userInput, tasks.size());
+                    Task removedTask = tasks.remove(taskNumber);
+                    System.out.println("____________________________________________________________");
+                    System.out.println(" Noted. I've removed this task:");
+                    System.out.println("   " + removedTask);
+                    System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
                     System.out.println("____________________________________________________________");
                 } else {
                     throw new NimbusException("Oops! I don't recognize that command. Try 'todo', 'deadline', or 'event' to start.");
