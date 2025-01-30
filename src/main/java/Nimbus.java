@@ -1,7 +1,12 @@
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Nimbus {
+    private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     public static void main(String[] args) {
         System.out.println("____________________________________________________________");
         System.out.println(" Hey there! I'm Nimbus, your assistant. ☁️");
@@ -39,6 +44,7 @@ public class Nimbus {
                     case MARK -> markTask(userInput, tasks, true);
                     case UNMARK -> markTask(userInput, tasks, false);
                     case DELETE -> deleteTask(userInput, tasks);
+                    case FIND_DATE -> findTasksByDate(userInput, tasks);
                     default -> throw new NimbusException("Oops! I don't recognize that command.");
                 }
 
@@ -57,7 +63,7 @@ public class Nimbus {
 
     // Enum for commands
     enum Command {
-        BYE, LIST, TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE;
+        BYE, LIST, TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, FIND_DATE;
 
         public static Command parseCommand(String input) throws NimbusException {
             String command = input.split(" ")[0].toUpperCase();
@@ -89,11 +95,7 @@ public class Nimbus {
         }
         String description = input.substring(5).trim();
         tasks.add(new Todo(description));
-        System.out.println("____________________________________________________________");
-        System.out.println(" Got it. I've added this task:");
-        System.out.println("   " + tasks.get(tasks.size() - 1));
-        System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
-        System.out.println("____________________________________________________________");
+        confirmTaskAdded(tasks);
     }
 
     private static void addDeadlineTask(String input, ArrayList<Task> tasks) throws NimbusException {
@@ -101,12 +103,15 @@ public class Nimbus {
             throw new NimbusException("Oops! Deadlines need a description and a '/by' date.");
         }
         String[] parts = input.substring(9).split(" /by ");
-        tasks.add(new Deadline(parts[0].trim(), parts[1].trim()));
-        System.out.println("____________________________________________________________");
-        System.out.println(" Got it. I've added this task:");
-        System.out.println("   " + tasks.get(tasks.size() - 1));
-        System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
-        System.out.println("____________________________________________________________");
+        try {
+            tasks.add(new Deadline(parts[0].trim(), parts[1].trim()));
+        } catch (IllegalArgumentException e) {
+            System.out.println("____________________________________________________________");
+            System.out.println(" Oops! " + e.getMessage());
+            System.out.println("____________________________________________________________");
+            return;
+        }
+        confirmTaskAdded(tasks);
     }
 
     private static void addEventTask(String input, ArrayList<Task> tasks) throws NimbusException {
@@ -114,12 +119,15 @@ public class Nimbus {
             throw new NimbusException("Oops! Events need a description, '/from' time, and '/to' time.");
         }
         String[] parts = input.substring(6).split(" /from | /to ");
-        tasks.add(new Event(parts[0].trim(), parts[1].trim(), parts[2].trim()));
-        System.out.println("____________________________________________________________");
-        System.out.println(" Got it. I've added this task:");
-        System.out.println("   " + tasks.get(tasks.size() - 1));
-        System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
-        System.out.println("____________________________________________________________");
+        try {
+            tasks.add(new Event(parts[0].trim(), parts[1].trim(), parts[2].trim()));
+        } catch (IllegalArgumentException e) {
+            System.out.println("____________________________________________________________");
+            System.out.println(" Oops! " + e.getMessage());
+            System.out.println("____________________________________________________________");
+            return;
+        }
+        confirmTaskAdded(tasks);
     }
 
     private static void markTask(String input, ArrayList<Task> tasks, boolean isDone) throws NimbusException {
@@ -156,6 +164,38 @@ public class Nimbus {
             return taskNumber;
         } catch (NumberFormatException e) {
             throw new NimbusException("Oops! Please provide a valid task number.");
+        }
+    }
+
+    private static void confirmTaskAdded(ArrayList<Task> tasks) {
+        System.out.println("____________________________________________________________");
+        System.out.println(" Got it. I've added this task:");
+        System.out.println("   " + tasks.get(tasks.size() - 1));
+        System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
+        System.out.println("____________________________________________________________");
+    }
+
+    private static void findTasksByDate(String input, ArrayList<Task> tasks) {
+        try {
+            String dateStr = input.split(" ", 2)[1];
+            LocalDate searchDate = LocalDate.parse(dateStr, DATE_FORMAT);
+
+            System.out.println(" Tasks on " + searchDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy")) + ":");
+            for (Task task : tasks) {
+                if (task instanceof Deadline deadline && deadline.isOnDate(searchDate.atStartOfDay())) {
+                    System.out.println(" " + task);
+                }
+                if (task instanceof Event event && event.isOnDate(searchDate.atStartOfDay())) {
+                    System.out.println(" " + task);
+                }
+            }
+
+        } catch (ArrayIndexOutOfBoundsException | DateTimeParseException e) {
+            System.out.println("Invalid date format! Try examples like:\n"
+                    + " - 2023-10-15 1800\n"
+                    + " - 15/10/2023 1800\n"
+                    + " - Oct 15 2023 1800\n"
+                    + " - 15 10 2023 1800");
         }
     }
 }
