@@ -45,6 +45,7 @@ public class Nimbus {
                     case UNMARK -> markTask(userInput, tasks, false);
                     case DELETE -> deleteTask(userInput, tasks);
                     case FIND_DATE -> findTasksByDate(userInput, tasks);
+                    case CLEAR -> clearAllTasks(tasks);
                     default -> throw new NimbusException("Oops! I don't recognize that command.");
                 }
 
@@ -63,7 +64,7 @@ public class Nimbus {
 
     // Enum for commands
     enum Command {
-        BYE, LIST, TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, FIND_DATE;
+        BYE, LIST, TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, FIND_DATE, CLEAR;
 
         public static Command parseCommand(String input) throws NimbusException {
             String command = input.split(" ")[0].toUpperCase();
@@ -199,5 +200,13 @@ public class Nimbus {
                     + " - 15 10 2023 1800");
             System.out.println("____________________________________________________________");
         }
+    }
+
+    private static void clearAllTasks(ArrayList<Task> tasks) {
+        tasks.clear(); // Remove all tasks
+        Storage.saveTasks(tasks); // Save the empty task list to file
+        System.out.println("____________________________________________________________");
+        System.out.println(" All tasks have been cleared.");
+        System.out.println("____________________________________________________________");
     }
 }
