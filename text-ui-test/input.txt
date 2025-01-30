@@ -1,3 +1,4 @@
+clear
 todo Finish CS2103T Assignment
 deadline Submit Report /by 2023-10-15 1800
 deadline Pay Bills /by 15/10/2023 1400
