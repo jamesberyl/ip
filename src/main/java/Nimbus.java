@@ -8,7 +8,7 @@ public class Nimbus {
         System.out.println(" How can I make your day brighter?");
         System.out.println("____________________________________________________________");
 
-        ArrayList<Task> tasks = new ArrayList<>();
+        ArrayList<Task> tasks = new ArrayList<>(Storage.loadTasks());
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
@@ -29,6 +29,7 @@ public class Nimbus {
                         System.out.println("____________________________________________________________");
                         System.out.println(" Stay awesome, and I’ll see you soon! 👋");
                         System.out.println("____________________________________________________________");
+                        Storage.saveTasks(tasks); // Save before exiting
                         return; // Exit program
                     }
                     case LIST -> printTasks(tasks);
@@ -40,6 +41,8 @@ public class Nimbus {
                     case DELETE -> deleteTask(userInput, tasks);
                     default -> throw new NimbusException("Oops! I don't recognize that command.");
                 }
+
+                Storage.saveTasks(tasks); // Auto-save after modification
             } catch (NimbusException e) {
                 System.out.println("____________________________________________________________");
                 System.out.println(" " + e.getMessage());
