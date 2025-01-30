@@ -191,11 +191,13 @@ public class Nimbus {
             }
 
         } catch (ArrayIndexOutOfBoundsException | DateTimeParseException e) {
+            System.out.println("____________________________________________________________");
             System.out.println("Invalid date format! Try examples like:\n"
                     + " - 2023-10-15 1800\n"
                     + " - 15/10/2023 1800\n"
                     + " - Oct 15 2023 1800\n"
                     + " - 15 10 2023 1800");
+            System.out.println("____________________________________________________________");
         }
     }
 }
