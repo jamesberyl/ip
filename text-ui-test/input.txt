@@ -1,11 +1,19 @@
-todo read book
-list
-todo join sports club
-deadline return book /by June 6th
-event project meeting /from Aug 6th 2pm /to 4pm
-list
+todo Finish CS2103T Assignment
+deadline Submit Report /by 2023-10-15 1800
+deadline Pay Bills /by 15/10/2023 1400
+deadline Apply for Internship /by Oct 20 2023 2359
+deadline Attend Seminar /by 20 10 2023 1200
+event Team Meeting /from 2023-12-01 1000 /to 2023-12-01 1200
+event Family Dinner /from 01/12/2023 1900 /to 01/12/2023 2100
+event Conference /from Dec 10 2023 0900 /to Dec 10 2023 1700
+event Hackathon /from 10 12 2023 1800 /to 10 12 2023 2359
 mark 2
 unmark 2
 delete 3
 list
+find_date 2023-12-01
+find_date 2023-10-15
+deadline Submit Proposal /by 15-10-2023 1800
+event Workshop /from 2023.10.15 1000 /to 2023.10.15 1700
+find_date 10/15/2023
 bye
