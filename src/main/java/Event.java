@@ -15,20 +15,20 @@ public class Event extends Task {
     );
     private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mm a");
 
-    public Event(String description, String from, String to) {
+    public Event(String description, String from, String to) throws NimbusException {
         super(description);
         this.from = parseDateTime(from);
         this.to = parseDateTime(to);
     }
 
-    private LocalDateTime parseDateTime(String dateTimeString) {
+    private LocalDateTime parseDateTime(String dateTimeString) throws NimbusException {
         for (DateTimeFormatter format : INPUT_FORMATS) {
             try {
                 return LocalDateTime.parse(dateTimeString, format);
             } catch (DateTimeParseException ignored) {
             }
         }
-        throw new IllegalArgumentException("Invalid date format! Try examples like:\n"
+        throw new NimbusException("Oops! Invalid date format! Try examples like:\n"
                 + " - 2023-10-15 1800\n"
                 + " - 15/10/2023 1800\n"
                 + " - Oct 15 2023 1800\n"
