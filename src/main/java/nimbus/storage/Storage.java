@@ -1,3 +1,10 @@
+package nimbus.storage;
+
+import nimbus.tasks.Task;
+import nimbus.tasks.Todo;
+import nimbus.tasks.Deadline;
+import nimbus.tasks.Event;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;

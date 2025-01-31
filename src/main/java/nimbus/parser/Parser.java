@@ -1,3 +1,10 @@
+package nimbus.parser;
+
+import nimbus.tasks.TaskList;
+import nimbus.storage.Storage;
+import nimbus.exceptions.NimbusException;
+import nimbus.ui.UI;
+
 public class Parser {
     private TaskList taskList;
     private UI ui;

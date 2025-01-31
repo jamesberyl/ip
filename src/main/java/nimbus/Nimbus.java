@@ -1,3 +1,11 @@
+package nimbus;
+
+import nimbus.ui.UI;
+import nimbus.storage.Storage;
+import nimbus.tasks.TaskList;
+import nimbus.parser.Parser;
+import nimbus.exceptions.NimbusException;
+
 public class Nimbus {
     private UI ui;
     private Storage storage;

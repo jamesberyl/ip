@@ -1,11 +1,15 @@
+package nimbus.tasks;
+
+import nimbus.exceptions.NimbusException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.List;
 
-public class Deadline extends Task {
-    private LocalDateTime by;
+public class Event extends Task {
+    private LocalDateTime from;
+    private LocalDateTime to;
     private static final List<DateTimeFormatter> INPUT_FORMATS = Arrays.asList(
             DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm"),
             DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm"),
@@ -14,9 +18,10 @@ public class Deadline extends Task {
     );
     private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mm a");
 
-    public Deadline(String description, String by) throws NimbusException {
+    public Event(String description, String from, String to) throws NimbusException {
         super(description);
-        this.by = parseDateTime(by);
+        this.from = parseDateTime(from);
+        this.to = parseDateTime(to);
     }
 
     private LocalDateTime parseDateTime(String dateTimeString) throws NimbusException {
@@ -35,15 +40,15 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + by.format(OUTPUT_FORMAT) + ")";
+        return "[E]" + super.toString() + " (from: " + from.format(OUTPUT_FORMAT) + " to: " + to.format(OUTPUT_FORMAT) + ")";
     }
 
     @Override
     public String toFileString() {
-        return "D | " + (isDone ? "1" : "0") + " | " + description + " | " + by.format(INPUT_FORMATS.get(0));
+        return "E | " + (isDone ? "1" : "0") + " | " + description + " | " + from.format(INPUT_FORMATS.get(0)) + " | " + to.format(INPUT_FORMATS.get(0));
     }
 
     public boolean isOnDate(LocalDateTime date) {
-        return by.toLocalDate().equals(date.toLocalDate());
+        return from.toLocalDate().equals(date.toLocalDate()) || to.toLocalDate().equals(date.toLocalDate());
     }
 }
