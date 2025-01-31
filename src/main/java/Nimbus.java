@@ -178,29 +178,62 @@ public class Nimbus {
 
     private static void findTasksByDate(String input, ArrayList<Task> tasks) {
         try {
-            String dateStr = input.split(" ", 2)[1];
-            LocalDate searchDate = LocalDate.parse(dateStr, DATE_FORMAT);
+            String dateStr = input.split(" ", 2)[1].trim(); // Extract date part
+            LocalDate searchDate = null;
 
+            // Supported date formats
+            DateTimeFormatter[] formats = {
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd"),
+                    DateTimeFormatter.ofPattern("dd/MM/yyyy"),
+                    DateTimeFormatter.ofPattern("MMM dd yyyy"),
+                    DateTimeFormatter.ofPattern("dd MM yyyy")
+            };
+
+            // Try parsing the date
+            for (DateTimeFormatter format : formats) {
+                try {
+                    searchDate = LocalDate.parse(dateStr, format);
+                    break; // Stop if successful
+                } catch (DateTimeParseException ignored) {}
+            }
+
+            if (searchDate == null) {
+                throw new NimbusException("Oops! Invalid date format! Try examples like:\n"
+                        + " - 2023-10-15\n"
+                        + " - 15/10/2023\n"
+                        + " - Oct 15 2023\n"
+                        + " - 15 10 2023");
+            }
+
+            // Display tasks for the given date
             System.out.println("____________________________________________________________");
             System.out.println(" Tasks on " + searchDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy")) + ":");
 
+            boolean found = false;
             for (Task task : tasks) {
                 if (task instanceof Deadline deadline && deadline.isOnDate(searchDate.atStartOfDay())) {
-                    System.out.println(" " + task);
+                    System.out.println("   " + task);
+                    found = true;
                 }
                 if (task instanceof Event event && event.isOnDate(searchDate.atStartOfDay())) {
-                    System.out.println(" " + task);
+                    System.out.println("   " + task);
+                    found = true;
                 }
             }
+
+            if (!found) {
+                System.out.println("   No tasks found on this date.");
+            }
+
             System.out.println("____________________________________________________________");
 
-        } catch (ArrayIndexOutOfBoundsException | DateTimeParseException e) {
+        } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("____________________________________________________________");
-            System.out.println("Invalid date format! Try examples like:\n"
-                    + " - 2023-10-15 1800\n"
-                    + " - 15/10/2023 1800\n"
-                    + " - Oct 15 2023 1800\n"
-                    + " - 15 10 2023 1800");
+            System.out.println(" Oops! Please enter a date after 'find_date'. Example: find_date 2023-12-01");
+            System.out.println("____________________________________________________________");
+        } catch (NimbusException e) {
+            System.out.println("____________________________________________________________");
+            System.out.println(" " + e.getMessage());
             System.out.println("____________________________________________________________");
         }
     }
