@@ -1,261 +1,35 @@
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
-import java.util.Scanner;
-
 public class Nimbus {
-    private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    public static void main(String[] args) {
-        System.out.println("____________________________________________________________");
-        System.out.println(" Hey there! I'm Nimbus, your assistant. ☁️");
-        System.out.println(" How can I make your day brighter?");
-        System.out.println("____________________________________________________________");
+    private UI ui;
+    private Storage storage;
+    private TaskList taskList;
+    private Parser parser;
 
-        ArrayList<Task> tasks = new ArrayList<>(Storage.loadTasks());
-        Scanner scanner = new Scanner(System.in);
+    public Nimbus(String filepath) {
+        this.ui = new UI();
+        this.storage = new Storage(filepath);
+        this.taskList = new TaskList(storage, ui);
+        this.parser = new Parser(taskList, ui, storage);
+    }
 
-        while (true) {
+    public void run() {
+        ui.showWelcomeMessage();
+        boolean isRunning = true;
+
+        while (isRunning) {
             try {
-                String userInput = scanner.nextLine().trim();
-
-                // Handle empty input
-                if (userInput.isEmpty()) {
-                    throw new NimbusException("Oops! It seems like you entered nothing. Try typing a command.");
+                String input = ui.readCommand().trim();
+                if (input.equalsIgnoreCase("bye")) {
+                    ui.showExitMessage();
+                    break;
                 }
-
-                // Parse command
-                Command command = Command.parseCommand(userInput);
-
-                // Execute command
-                switch (command) {
-                    case BYE -> {
-                        System.out.println("____________________________________________________________");
-                        System.out.println(" Stay awesome, and I’ll see you soon! 👋");
-                        System.out.println("____________________________________________________________");
-                        Storage.saveTasks(tasks); // Save before exiting
-                        return; // Exit program
-                    }
-                    case LIST -> printTasks(tasks);
-                    case TODO -> addTodoTask(userInput, tasks);
-                    case DEADLINE -> addDeadlineTask(userInput, tasks);
-                    case EVENT -> addEventTask(userInput, tasks);
-                    case MARK -> markTask(userInput, tasks, true);
-                    case UNMARK -> markTask(userInput, tasks, false);
-                    case DELETE -> deleteTask(userInput, tasks);
-                    case FIND_DATE -> findTasksByDate(userInput, tasks);
-                    case CLEAR -> clearAllTasks(tasks, scanner);
-                    default -> throw new NimbusException("Oops! I don't recognize that command.");
-                }
-
-                Storage.saveTasks(tasks); // Auto-save after modification
+                parser.processCommand(input);
             } catch (NimbusException e) {
-                System.out.println("____________________________________________________________");
-                System.out.println(" " + e.getMessage());
-                System.out.println("____________________________________________________________");
-            } catch (Exception e) {
-                System.out.println("____________________________________________________________");
-                System.out.println(" Something went wrong! Please try again. If the problem persists, contact support.");
-                System.out.println("____________________________________________________________");
+                ui.showErrorMessage(e.getMessage());
             }
         }
     }
 
-    // Enum for commands
-    enum Command {
-        BYE, LIST, TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, FIND_DATE, CLEAR;
-
-        public static Command parseCommand(String input) throws NimbusException {
-            String command = input.split(" ")[0].toUpperCase();
-            try {
-                return Command.valueOf(command);
-            } catch (IllegalArgumentException e) {
-                throw new NimbusException("Oops! I don't recognize that command.");
-            }
-        }
-    }
-
-    // Helper methods for tasks
-    private static void printTasks(ArrayList<Task> tasks) {
-        System.out.println("____________________________________________________________");
-        if (tasks.isEmpty()) {
-            System.out.println(" Hmm... Your task list is empty. Ready to add something?");
-        } else {
-            System.out.println(" Here are the tasks in your list:");
-            for (int i = 0; i < tasks.size(); i++) {
-                System.out.println(" " + (i + 1) + ". " + tasks.get(i));
-            }
-        }
-        System.out.println("____________________________________________________________");
-    }
-
-    private static void addTodoTask(String input, ArrayList<Task> tasks) throws NimbusException {
-        if (input.length() <= 5) {
-            throw new NimbusException("Oops! The description of a todo cannot be empty.");
-        }
-        String description = input.substring(5).trim();
-        tasks.add(new Todo(description));
-        confirmTaskAdded(tasks);
-    }
-
-    private static void addDeadlineTask(String input, ArrayList<Task> tasks) throws NimbusException {
-        if (input.length() <= 9 || !input.contains("/by")) {
-            throw new NimbusException("Oops! Deadlines need a description and a '/by' date.");
-        }
-        String[] parts = input.substring(9).split(" /by ");
-        try {
-            tasks.add(new Deadline(parts[0].trim(), parts[1].trim()));
-        } catch (IllegalArgumentException e) {
-            System.out.println("____________________________________________________________");
-            System.out.println(" Oops! " + e.getMessage());
-            System.out.println("____________________________________________________________");
-            return;
-        }
-        confirmTaskAdded(tasks);
-    }
-
-    private static void addEventTask(String input, ArrayList<Task> tasks) throws NimbusException {
-        if (input.length() <= 6 || (!input.contains("/from") || !input.contains("/to"))) {
-            throw new NimbusException("Oops! Events need a description, '/from' time, and '/to' time.");
-        }
-        String[] parts = input.substring(6).split(" /from | /to ");
-        try {
-            tasks.add(new Event(parts[0].trim(), parts[1].trim(), parts[2].trim()));
-        } catch (IllegalArgumentException e) {
-            System.out.println("____________________________________________________________");
-            System.out.println(" Oops! " + e.getMessage());
-            System.out.println("____________________________________________________________");
-            return;
-        }
-        confirmTaskAdded(tasks);
-    }
-
-    private static void markTask(String input, ArrayList<Task> tasks, boolean isDone) throws NimbusException {
-        int taskNumber = parseTaskNumber(input, tasks.size());
-        if (isDone) {
-            tasks.get(taskNumber).markAsDone();
-            System.out.println("____________________________________________________________");
-            System.out.println(" Nice! I've marked this task as done:");
-        } else {
-            tasks.get(taskNumber).unmark();
-            System.out.println("____________________________________________________________");
-            System.out.println(" OK, I've marked this task as not done yet:");
-        }
-        System.out.println("   " + tasks.get(taskNumber));
-        System.out.println("____________________________________________________________");
-    }
-
-    private static void deleteTask(String input, ArrayList<Task> tasks) throws NimbusException {
-        int taskNumber = parseTaskNumber(input, tasks.size());
-        Task removedTask = tasks.remove(taskNumber);
-        System.out.println("____________________________________________________________");
-        System.out.println(" Noted. I've removed this task:");
-        System.out.println("   " + removedTask);
-        System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
-        System.out.println("____________________________________________________________");
-    }
-
-    private static int parseTaskNumber(String input, int taskCount) throws NimbusException {
-        try {
-            int taskNumber = Integer.parseInt(input.split(" ")[1]) - 1;
-            if (taskNumber < 0 || taskNumber >= taskCount) {
-                throw new NimbusException("Oops! That task number doesn't exist. Please check your list.");
-            }
-            return taskNumber;
-        } catch (NumberFormatException e) {
-            throw new NimbusException("Oops! Please provide a valid task number.");
-        }
-    }
-
-    private static void confirmTaskAdded(ArrayList<Task> tasks) {
-        System.out.println("____________________________________________________________");
-        System.out.println(" Got it. I've added this task:");
-        System.out.println("   " + tasks.get(tasks.size() - 1));
-        System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
-        System.out.println("____________________________________________________________");
-    }
-
-    private static void findTasksByDate(String input, ArrayList<Task> tasks) {
-        try {
-            String dateStr = input.split(" ", 2)[1].trim(); // Extract date part
-            LocalDate searchDate = null;
-
-            // Supported date formats
-            DateTimeFormatter[] formats = {
-                    DateTimeFormatter.ofPattern("yyyy-MM-dd"),
-                    DateTimeFormatter.ofPattern("dd/MM/yyyy"),
-                    DateTimeFormatter.ofPattern("MMM dd yyyy"),
-                    DateTimeFormatter.ofPattern("dd MM yyyy")
-            };
-
-            // Try parsing the date
-            for (DateTimeFormatter format : formats) {
-                try {
-                    searchDate = LocalDate.parse(dateStr, format);
-                    break; // Stop if successful
-                } catch (DateTimeParseException ignored) {}
-            }
-
-            if (searchDate == null) {
-                throw new NimbusException("Oops! Invalid date format! Try examples like:\n"
-                        + " - 2023-10-15\n"
-                        + " - 15/10/2023\n"
-                        + " - Oct 15 2023\n"
-                        + " - 15 10 2023");
-            }
-
-            // Display tasks for the given date
-            System.out.println("____________________________________________________________");
-            System.out.println(" Tasks on " + searchDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy")) + ":");
-
-            boolean found = false;
-            for (Task task : tasks) {
-                if (task instanceof Deadline deadline && deadline.isOnDate(searchDate.atStartOfDay())) {
-                    System.out.println("   " + task);
-                    found = true;
-                }
-                if (task instanceof Event event && event.isOnDate(searchDate.atStartOfDay())) {
-                    System.out.println("   " + task);
-                    found = true;
-                }
-            }
-
-            if (!found) {
-                System.out.println("   No tasks found on this date.");
-            }
-
-            System.out.println("____________________________________________________________");
-
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("____________________________________________________________");
-            System.out.println(" Oops! Please enter a date after 'find_date'. Example: find_date 2023-12-01");
-            System.out.println("____________________________________________________________");
-        } catch (NimbusException e) {
-            System.out.println("____________________________________________________________");
-            System.out.println(" " + e.getMessage());
-            System.out.println("____________________________________________________________");
-        }
-    }
-
-    private static void clearAllTasks(ArrayList<Task> tasks, Scanner scanner) {
-        System.out.println("____________________________________________________________");
-        System.out.println(" ⚠ WARNING: This will delete ALL tasks permanently.");
-        System.out.println(" Are you sure you want to proceed? (y/n)");
-        System.out.println("____________________________________________________________");
-
-        String confirmation = scanner.nextLine().trim().toLowerCase();
-
-        if (confirmation.equals("y")) {
-            tasks.clear(); // Remove all tasks
-            Storage.saveTasks(tasks); // Save the empty state to file
-            System.out.println("____________________________________________________________");
-            System.out.println(" ✅ All tasks have been cleared.");
-            System.out.println("____________________________________________________________");
-        } else {
-            System.out.println("____________________________________________________________");
-            System.out.println(" ❌ Task clearing cancelled.");
-            System.out.println("____________________________________________________________");
-        }
+    public static void main(String[] args) {
+        new Nimbus("./data/nimbus.txt").run();
     }
 }
