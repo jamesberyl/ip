@@ -181,7 +181,9 @@ public class Nimbus {
             String dateStr = input.split(" ", 2)[1];
             LocalDate searchDate = LocalDate.parse(dateStr, DATE_FORMAT);
 
+            System.out.println("____________________________________________________________");
             System.out.println(" Tasks on " + searchDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy")) + ":");
+
             for (Task task : tasks) {
                 if (task instanceof Deadline deadline && deadline.isOnDate(searchDate.atStartOfDay())) {
                     System.out.println(" " + task);
@@ -190,6 +192,7 @@ public class Nimbus {
                     System.out.println(" " + task);
                 }
             }
+            System.out.println("____________________________________________________________");
 
         } catch (ArrayIndexOutOfBoundsException | DateTimeParseException e) {
             System.out.println("____________________________________________________________");
