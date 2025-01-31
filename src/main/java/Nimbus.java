@@ -45,7 +45,7 @@ public class Nimbus {
                     case UNMARK -> markTask(userInput, tasks, false);
                     case DELETE -> deleteTask(userInput, tasks);
                     case FIND_DATE -> findTasksByDate(userInput, tasks);
-                    case CLEAR -> clearAllTasks(tasks);
+                    case CLEAR -> clearAllTasks(tasks, scanner);
                     default -> throw new NimbusException("Oops! I don't recognize that command.");
                 }
 
@@ -202,11 +202,24 @@ public class Nimbus {
         }
     }
 
-    private static void clearAllTasks(ArrayList<Task> tasks) {
-        tasks.clear(); // Remove all tasks
-        Storage.saveTasks(tasks); // Save the empty task list to file
+    private static void clearAllTasks(ArrayList<Task> tasks, Scanner scanner) {
         System.out.println("____________________________________________________________");
-        System.out.println(" All tasks have been cleared.");
+        System.out.println(" ⚠ WARNING: This will delete ALL tasks permanently.");
+        System.out.println(" Are you sure you want to proceed? (y/n)");
         System.out.println("____________________________________________________________");
+
+        String confirmation = scanner.nextLine().trim().toLowerCase();
+
+        if (confirmation.equals("y")) {
+            tasks.clear(); // Remove all tasks
+            Storage.saveTasks(tasks); // Save the empty state to file
+            System.out.println("____________________________________________________________");
+            System.out.println(" ✅ All tasks have been cleared.");
+            System.out.println("____________________________________________________________");
+        } else {
+            System.out.println("____________________________________________________________");
+            System.out.println(" ❌ Task clearing cancelled.");
+            System.out.println("____________________________________________________________");
+        }
     }
 }
