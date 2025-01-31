@@ -1,35 +1,35 @@
 #!/usr/bin/env bash
 
-# create bin directory if it doesn't exist
-if [ ! -d "../bin" ]
-then
-    mkdir ../bin
+# Define directories
+SRC_DIR="../src/main/java"
+BIN_DIR="../bin"
+
+# Create bin directory if it doesn't exist
+if [ ! -d "$BIN_DIR" ]; then
+    mkdir -p "$BIN_DIR"
 fi
 
-# delete output from previous run
-if [ -e "./ACTUAL.TXT" ]
-then
+# Delete output from previous run
+if [ -e "./ACTUAL.TXT" ]; then
     rm ACTUAL.TXT
 fi
 
-# compile the code into the bin folder, terminates if error occurred
-if ! javac -cp ../src/main/java -Xlint:none -d ../bin ../src/main/java/*.java
-then
+# Compile all Java files inside the correct package structure
+if ! javac -cp "$SRC_DIR" -Xlint:none -d "$BIN_DIR" $(find "$SRC_DIR" -name "*.java"); then
     echo "********** BUILD FAILURE **********"
     exit 1
 fi
 
-# run the program, feed commands from input.txt file and redirect the output to the ACTUAL.TXT
-java -classpath ../bin Nimbus < input.txt > ACTUAL.TXT
+# Run the program with package name and feed commands from input.txt
+java -classpath "$BIN_DIR" nimbus.Nimbus < input.txt > ACTUAL.TXT
 
-# convert to UNIX format
+# Convert to UNIX format (ensure dos2unix is installed)
 cp EXPECTED.TXT EXPECTED-UNIX.TXT
 dos2unix ACTUAL.TXT EXPECTED-UNIX.TXT
 
-# compare the output to the expected output
+# Compare actual output with expected output
 diff ACTUAL.TXT EXPECTED-UNIX.TXT
-if [ $? -eq 0 ]
-then
+if [ $? -eq 0 ]; then
     echo "Test result: PASSED"
     exit 0
 else
