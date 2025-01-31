@@ -3,7 +3,11 @@ ____________________________________________________________
  How can I make your day brighter?
 ____________________________________________________________
 ____________________________________________________________
- All tasks have been cleared.
+ ⚠ WARNING: This will delete ALL tasks permanently.
+ Are you sure you want to proceed? (y/n)
+____________________________________________________________
+____________________________________________________________
+ ✅ All tasks have been cleared.
 ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this task:
@@ -12,98 +16,97 @@ ____________________________________________________________
 ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this task:
-   [D][ ] Submit Report (by: Oct 15 2023, 6:00 PM)
+   [D][ ] Submit Report (by: Oct 15 2023, 6:00 pm)
  Now you have 2 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this task:
-   [D][ ] Pay Bills (by: Oct 15 2023, 2:00 PM)
+   [D][ ] Pay Bills (by: Oct 15 2023, 2:00 pm)
  Now you have 3 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this task:
-   [D][ ] Apply for Internship (by: Oct 20 2023, 11:59 PM)
+   [D][ ] Apply for Internship (by: Oct 20 2023, 11:59 pm)
  Now you have 4 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this task:
-   [D][ ] Attend Seminar (by: Oct 20 2023, 12:00 PM)
+   [D][ ] Attend Seminar (by: Oct 20 2023, 12:00 pm)
  Now you have 5 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this task:
-   [E][ ] Team Meeting (from: Dec 01 2023, 10:00 AM to: Dec 01 2023, 12:00 PM)
+   [E][ ] Team Meeting (from: Dec 01 2023, 10:00 am to: Dec 01 2023, 12:00 pm)
  Now you have 6 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this task:
-   [E][ ] Family Dinner (from: Dec 01 2023, 7:00 PM to: Dec 01 2023, 9:00 PM)
+   [E][ ] Family Dinner (from: Dec 01 2023, 7:00 pm to: Dec 01 2023, 9:00 pm)
  Now you have 7 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this task:
-   [E][ ] Conference (from: Dec 10 2023, 9:00 AM to: Dec 10 2023, 5:00 PM)
+   [E][ ] Conference (from: Dec 10 2023, 9:00 am to: Dec 10 2023, 5:00 pm)
  Now you have 8 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this task:
-   [E][ ] Hackathon (from: Dec 10 2023, 6:00 PM to: Dec 10 2023, 11:59 PM)
+   [E][ ] Hackathon (from: Dec 10 2023, 6:00 pm to: Dec 10 2023, 11:59 pm)
  Now you have 9 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
  Nice! I've marked this task as done:
-   [D][X] Pay Bills (by: Oct 15 2023, 2:00 PM)
+   [D][X] Submit Report (by: Oct 15 2023, 6:00 pm)
 ____________________________________________________________
 ____________________________________________________________
  OK, I've marked this task as not done yet:
-   [D][ ] Pay Bills (by: Oct 15 2023, 2:00 PM)
+   [D][ ] Submit Report (by: Oct 15 2023, 6:00 pm)
 ____________________________________________________________
 ____________________________________________________________
  Noted. I've removed this task:
-   [D][ ] Apply for Internship (by: Oct 20 2023, 11:59 PM)
+   [D][ ] Pay Bills (by: Oct 15 2023, 2:00 pm)
  Now you have 8 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
  Here are the tasks in your list:
-  1. [T][ ] Finish CS2103T Assignment
-  2. [D][ ] Submit Report (by: Oct 15 2023, 6:00 PM)
-  3. [D][ ] Pay Bills (by: Oct 15 2023, 2:00 PM)
-  4. [D][ ] Attend Seminar (by: Oct 20 2023, 12:00 PM)
-  5. [E][ ] Team Meeting (from: Dec 01 2023, 10:00 AM to: Dec 01 2023, 12:00 PM)
-  6. [E][ ] Family Dinner (from: Dec 01 2023, 7:00 PM to: Dec 01 2023, 9:00 PM)
-  7. [E][ ] Conference (from: Dec 10 2023, 9:00 AM to: Dec 10 2023, 5:00 PM)
-  8. [E][ ] Hackathon (from: Dec 10 2023, 6:00 PM to: Dec 10 2023, 11:59 PM)
+ 1. [T][ ] Finish CS2103T Assignment
+ 2. [D][ ] Submit Report (by: Oct 15 2023, 6:00 pm)
+ 3. [D][ ] Apply for Internship (by: Oct 20 2023, 11:59 pm)
+ 4. [D][ ] Attend Seminar (by: Oct 20 2023, 12:00 pm)
+ 5. [E][ ] Team Meeting (from: Dec 01 2023, 10:00 am to: Dec 01 2023, 12:00 pm)
+ 6. [E][ ] Family Dinner (from: Dec 01 2023, 7:00 pm to: Dec 01 2023, 9:00 pm)
+ 7. [E][ ] Conference (from: Dec 10 2023, 9:00 am to: Dec 10 2023, 5:00 pm)
+ 8. [E][ ] Hackathon (from: Dec 10 2023, 6:00 pm to: Dec 10 2023, 11:59 pm)
 ____________________________________________________________
 ____________________________________________________________
  Tasks on Dec 01 2023:
-   [E][ ] Team Meeting (from: Dec 01 2023, 10:00 AM to: Dec 01 2023, 12:00 PM)
-   [E][ ] Family Dinner (from: Dec 01 2023, 7:00 PM to: Dec 01 2023, 9:00 PM)
+   [E][ ] Team Meeting (from: Dec 01 2023, 10:00 am to: Dec 01 2023, 12:00 pm)
+   [E][ ] Family Dinner (from: Dec 01 2023, 7:00 pm to: Dec 01 2023, 9:00 pm)
 ____________________________________________________________
 ____________________________________________________________
  Tasks on Oct 15 2023:
-   [D][ ] Submit Report (by: Oct 15 2023, 6:00 PM)
-   [D][ ] Pay Bills (by: Oct 15 2023, 2:00 PM)
+   [D][ ] Submit Report (by: Oct 15 2023, 6:00 pm)
 ____________________________________________________________
 ____________________________________________________________
  Oops! Invalid date format! Try examples like:
-  - 2023-10-15 1800
-  - 15/10/2023 1800
-  - Oct 15 2023 1800
-  - 15 10 2023 1800
+ - 2023-10-15 1800
+ - 15/10/2023 1800
+ - Oct 15 2023 1800
+ - 15 10 2023 1800
 ____________________________________________________________
 ____________________________________________________________
  Oops! Invalid date format! Try examples like:
-  - 2023-10-15 1400
-  - 15/10/2023 1400
-  - Oct 15 2023 1400
-  - 15 10 2023 1400
+ - 2023-10-15 1800
+ - 15/10/2023 1800
+ - Oct 15 2023 1800
+ - 15 10 2023 1800
 ____________________________________________________________
 ____________________________________________________________
-Invalid date format! Try examples like:
-  - 2023-10-15 1400
-  - 15/10/2023 1400
-  - Oct 15 2023 1400
-  - 15 10 2023 1400
+ Oops! Invalid date format! Try examples like:
+ - 2023-10-15
+ - 15/10/2023
+ - Oct 15 2023
+ - 15 10 2023
 ____________________________________________________________
 ____________________________________________________________
  Stay awesome, and I’ll see you soon! 👋

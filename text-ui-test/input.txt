@@ -1,4 +1,5 @@
 clear
+y
 todo Finish CS2103T Assignment
 deadline Submit Report /by 2023-10-15 1800
 deadline Pay Bills /by 15/10/2023 1400
@@ -16,5 +17,5 @@ find_date 2023-12-01
 find_date 2023-10-15
 deadline Submit Proposal /by 15-10-2023 1800
 event Workshop /from 2023.10.15 1000 /to 2023.10.15 1700
-find_date 10/15/2023
+find_date 10-15-2023
 bye
