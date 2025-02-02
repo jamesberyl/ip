@@ -1,6 +1,6 @@
 package nimbus.parser;
 
-import nimbus.tasks.TaskList;
+import nimbus.tasklist.TaskList;
 import nimbus.storage.Storage;
 import nimbus.exceptions.NimbusException;
 import nimbus.ui.UI;

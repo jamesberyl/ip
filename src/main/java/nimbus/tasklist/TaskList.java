@@ -1,7 +1,11 @@
-package nimbus.tasks;
+package nimbus.tasklist;
 
 import nimbus.exceptions.NimbusException;
 import nimbus.storage.Storage;
+import nimbus.tasks.Deadline;
+import nimbus.tasks.Event;
+import nimbus.tasks.Task;
+import nimbus.tasks.Todo;
 import nimbus.ui.UI;
 
 import java.time.LocalDate;

@@ -2,7 +2,7 @@ package nimbus;
 
 import nimbus.ui.UI;
 import nimbus.storage.Storage;
-import nimbus.tasks.TaskList;
+import nimbus.tasklist.TaskList;
 import nimbus.parser.Parser;
 import nimbus.exceptions.NimbusException;
 
