@@ -8,17 +8,34 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Handles all user interactions in the Nimbus Chatbot application.
+ * Responsible for displaying messages, reading user input, and presenting task-related information.
+ */
 public class UI {
 
     private Scanner scanner;
 
+    /**
+     * Constructs a UI object for handling user interactions.
+     * Initializes the scanner to read user input from the console.
+     */
     public UI() {
         scanner = new Scanner(System.in);
     }
 
+    /**
+     * Reads the next command entered by the user.
+     *
+     * @return The user input as a string.
+     */
     public String readCommand() {
         return scanner.nextLine();
     }
+
+    /**
+     * Displays a welcome message when the application starts.
+     */
     public void showWelcomeMessage() {
         System.out.println("____________________________________________________________");
         System.out.println(" Hey there! I'm Nimbus, your assistant. ☁️");
@@ -26,19 +43,31 @@ public class UI {
         System.out.println("____________________________________________________________");
     }
 
+    /**
+     * Displays an exit message when the application is terminated.
+     */
     public void showExitMessage() {
         System.out.println("____________________________________________________________");
         System.out.println(" Stay awesome, and I’ll see you soon! 👋");
         System.out.println("____________________________________________________________");
     }
 
-
+    /**
+     * Displays an error message to the user.
+     *
+     * @param message The error message to display.
+     */
     public void showErrorMessage(String message) {
         System.out.println("____________________________________________________________");
         System.out.println(" " + message);
         System.out.println("____________________________________________________________");
     }
 
+    /**
+     * Displays the list of tasks.
+     *
+     * @param tasks The list of tasks to display.
+     */
     public void showTaskList(ArrayList<Task> tasks) {
         System.out.println("____________________________________________________________");
         if (tasks.isEmpty()) {
@@ -52,6 +81,12 @@ public class UI {
         System.out.println("____________________________________________________________");
     }
 
+    /**
+     * Displays a confirmation message when a task is added.
+     *
+     * @param task The task that was added.
+     * @param size The current number of tasks in the list.
+     */
     public void showTaskAdded(Task task, int size) {
         System.out.println("____________________________________________________________");
         System.out.println(" Got it. I've added this task:");
@@ -60,6 +95,12 @@ public class UI {
         System.out.println("____________________________________________________________");
     }
 
+    /**
+     * Displays a message when a task is marked as done or not done.
+     *
+     * @param task The task that was marked or unmarked.
+     * @param isDone True if the task was marked as done, false if unmarked.
+     */
     public void showTaskMarked(Task task, boolean isDone) {
         System.out.println("____________________________________________________________");
         if (isDone) {
@@ -71,6 +112,12 @@ public class UI {
         System.out.println("____________________________________________________________");
     }
 
+    /**
+     * Displays a message when a task is deleted.
+     *
+     * @param task The task that was deleted.
+     * @param size The current number of tasks in the list after deletion.
+     */
     public void showTaskDeleted(Task task, int size) {
         System.out.println("____________________________________________________________");
         System.out.println(" Noted. I've removed this task:");
@@ -79,6 +126,9 @@ public class UI {
         System.out.println("____________________________________________________________");
     }
 
+    /**
+     * Displays a confirmation prompt before clearing all tasks.
+     */
     public void showClearConfirmation() {
         System.out.println("____________________________________________________________");
         System.out.println(" ⚠ WARNING: This will delete ALL tasks permanently.");
@@ -86,18 +136,30 @@ public class UI {
         System.out.println("____________________________________________________________");
     }
 
+    /**
+     * Displays a message when all tasks have been cleared.
+     */
     public void showAllTasksCleared() {
         System.out.println("____________________________________________________________");
         System.out.println(" ✅ All tasks have been cleared.");
         System.out.println("____________________________________________________________");
     }
 
+    /**
+     * Displays a message when the task-clearing operation is canceled.
+     */
     public void showTaskClearingCancelled() {
         System.out.println("____________________________________________________________");
         System.out.println(" ❌ Task clearing cancelled.");
         System.out.println("____________________________________________________________");
     }
 
+    /**
+     * Displays tasks that occur on a specific date.
+     *
+     * @param searchDate The date to search for tasks.
+     * @param tasks The list of tasks to filter and display.
+     */
     public static void showTasksOnDate(LocalDate searchDate, ArrayList<Task> tasks) {
         System.out.println("____________________________________________________________");
         System.out.println(" Tasks on " + searchDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy")) + ":");
