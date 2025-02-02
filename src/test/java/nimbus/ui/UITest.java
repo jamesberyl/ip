@@ -11,6 +11,7 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class UITest {
 
@@ -81,5 +82,30 @@ class UITest {
         UI inputUI = new UI();
         String command = inputUI.readCommand();
         assertEquals("test command", command);
+    }
+
+    @Test
+    public void testShowMatchingTasks_withResults() {
+        ArrayList<Task> tasks = new ArrayList<>();
+        tasks.add(new Todo("read book"));
+        tasks.add(new Todo("return book"));
+
+        ui.showMatchingTasks(tasks, "book");
+
+        String output = outputStream.toString();
+        assertTrue(output.contains("Here are the matching tasks in your list for \"book\":"));
+        assertTrue(output.contains("1. [T][ ] read book"));
+        assertTrue(output.contains("2. [T][ ] return book"));
+    }
+
+    @Test
+    public void testShowMatchingTasks_noResults() {
+        ArrayList<Task> tasks = new ArrayList<>();
+
+        ui.showMatchingTasks(tasks, "groceries");
+
+        String output = outputStream.toString();
+        assertTrue(output.contains("Here are the matching tasks in your list for \"groceries\":"));
+        assertTrue(output.contains("No matching tasks found."));
     }
 }
