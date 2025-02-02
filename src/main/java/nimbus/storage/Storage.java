@@ -13,10 +13,19 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-
+/**
+ * Handles the storage and retrieval of tasks from a local file.
+ * This class manages reading from and writing to the file system,
+ * ensuring that tasks persist between sessions.
+ */
 public class Storage {
     private final String filePath;
 
+    /**
+     * Constructs a Storage object with the specified file path.
+     *
+     * @param filePath The path to the file where tasks will be saved and loaded.
+     */
     public Storage(String filePath) {
         this.filePath = filePath;
     }
@@ -24,6 +33,8 @@ public class Storage {
     /**
      * Saves the list of tasks to the storage file.
      * Ensures the parent directory exists before saving.
+     *
+     * @param tasks The list of tasks to be saved to the file.
      */
     public void saveTasks(ArrayList<Task> tasks) {
         File file = new File(filePath);
@@ -50,6 +61,8 @@ public class Storage {
     /**
      * Loads tasks from the storage file.
      * If the file does not exist, returns an empty ArrayList.
+     *
+     * @return A list of tasks loaded from the file. If the file is missing, returns an empty list.
      */
     public ArrayList<Task> loadTasks() {
         ArrayList<Task> tasks = new ArrayList<>();
@@ -91,30 +104,29 @@ public class Storage {
         }
 
         String type = parts[0].trim();
-        boolean isDone = parts[1].trim().equals("1");
         String description = parts[2].trim();
 
         switch (type) {
-            case "T": // Todo Task
-                return new Todo(description);
+        case "T": // Todo Task
+            return new Todo(description);
 
-            case "D": // Deadline Task
-                if (parts.length < 4) {
-                    throw new Exception("Invalid deadline format: " + line);
-                }
-                String deadline = parts[3].trim();
-                return new Deadline(description, deadline);
+        case "D": // Deadline Task
+            if (parts.length < 4) {
+                throw new Exception("Invalid deadline format: " + line);
+            }
+            String deadline = parts[3].trim();
+            return new Deadline(description, deadline);
 
-            case "E": // Event Task
-                if (parts.length < 5) {
-                    throw new Exception("Invalid event format: " + line);
-                }
-                String startTime = parts[3].trim();
-                String endTime = parts[4].trim();
-                return new Event(description, startTime, endTime);
+        case "E": // Event Task
+            if (parts.length < 5) {
+                throw new Exception("Invalid event format: " + line);
+            }
+            String startTime = parts[3].trim();
+            String endTime = parts[4].trim();
+            return new Event(description, startTime, endTime);
 
-            default:
-                throw new Exception("Unknown task type: " + line);
+        default:
+            throw new Exception("Unknown task type: " + line);
         }
     }
 }
