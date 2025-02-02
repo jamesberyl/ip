@@ -1,12 +1,13 @@
 package nimbus.tasks;
 
-import nimbus.exceptions.NimbusException;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.List;
+
+import nimbus.exceptions.NimbusException;
+
 
 /**
  * Represents a Deadline task in the Nimbus Chatbot application.
@@ -14,13 +15,14 @@ import java.util.List;
  */
 public class Deadline extends Task {
     private LocalDateTime by;
+    private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mm a");
     private static final List<DateTimeFormatter> INPUT_FORMATS = Arrays.asList(
             DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm"),
             DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm"),
             DateTimeFormatter.ofPattern("MMM dd yyyy HHmm"),
             DateTimeFormatter.ofPattern("dd MM yyyy HHmm")
     );
-    private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mm a");
+
 
     /**
      * Constructs a Deadline task with the specified description and due date/time.

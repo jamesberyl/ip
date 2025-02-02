@@ -1,10 +1,5 @@
 package nimbus.storage;
 
-import nimbus.tasks.Task;
-import nimbus.tasks.Todo;
-import nimbus.tasks.Deadline;
-import nimbus.tasks.Event;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -12,6 +7,12 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import nimbus.tasks.Deadline;
+import nimbus.tasks.Event;
+import nimbus.tasks.Task;
+import nimbus.tasks.Todo;
+
 
 /**
  * Handles the storage and retrieval of tasks from a local file.

@@ -1,8 +1,8 @@
 package nimbus.parser;
 
-import nimbus.tasklist.TaskList;
-import nimbus.storage.Storage;
 import nimbus.exceptions.NimbusException;
+import nimbus.storage.Storage;
+import nimbus.tasklist.TaskList;
 import nimbus.ui.UI;
 
 /**
@@ -34,6 +34,13 @@ public class Parser {
     public enum Command {
         BYE, LIST, TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, FIND_DATE, FIND, CLEAR;
 
+        /**
+         * Parses the user input and returns the corresponding command.
+         *
+         * @param input The raw user input string.
+         * @return The corresponding Command enum value.
+         * @throws NimbusException If the command is unrecognized.
+         */
         public static Command parseCommand(String input) throws NimbusException {
             String command = input.split(" ")[0].toUpperCase();
             try {

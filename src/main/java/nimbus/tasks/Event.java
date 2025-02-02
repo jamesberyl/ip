@@ -1,12 +1,12 @@
 package nimbus.tasks;
 
-import nimbus.exceptions.NimbusException;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.List;
+
+import nimbus.exceptions.NimbusException;
 
 /**
  * Represents an Event task in the Nimbus Chatbot application.

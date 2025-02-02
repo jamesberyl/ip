@@ -1,5 +1,10 @@
 package nimbus.tasklist;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+
 import nimbus.exceptions.NimbusException;
 import nimbus.storage.Storage;
 import nimbus.tasks.Deadline;
@@ -8,10 +13,6 @@ import nimbus.tasks.Task;
 import nimbus.tasks.Todo;
 import nimbus.ui.UI;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
 
 /**
  * Manages the list of tasks in the Nimbus Chatbot application.
@@ -159,7 +160,8 @@ public class TaskList {
                 try {
                     searchDate = LocalDate.parse(dateStr, format);
                     break;
-                } catch (DateTimeParseException ignored) {}
+                } catch (DateTimeParseException ignored) {
+                }
             }
 
             if (searchDate == null) {

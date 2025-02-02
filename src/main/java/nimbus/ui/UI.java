@@ -1,13 +1,13 @@
 package nimbus.ui;
 
-import nimbus.tasks.Task;
-import nimbus.tasks.Deadline;
-import nimbus.tasks.Event;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import nimbus.tasks.Deadline;
+import nimbus.tasks.Event;
+import nimbus.tasks.Task;
 
 /**
  * Handles all user interactions in the Nimbus Chatbot application.
