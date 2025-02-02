@@ -196,5 +196,27 @@ public class TaskList {
             throw new NimbusException("Oops! Please provide a valid task number.");
         }
     }
+
+    /**
+     * Finds tasks that contain the specified keyword in their description.
+     *
+     * @param input The user input containing the keyword to search for.
+     */
+    public void findTasksByKeyword(String input) {
+        try {
+            String keyword = input.split(" ", 2)[1].trim();
+            ArrayList<Task> matchingTasks = new ArrayList<>();
+
+            for (Task task : tasks) {
+                if (task.getDescription().toLowerCase().contains(keyword.toLowerCase())) {
+                    matchingTasks.add(task);
+                }
+            }
+
+            ui.showMatchingTasks(matchingTasks, keyword);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            ui.showErrorMessage("Oops! Please enter a keyword after 'find'. Example: find book");
+        }
+    }
 }
 

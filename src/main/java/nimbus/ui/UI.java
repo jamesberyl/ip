@@ -183,4 +183,25 @@ public class UI {
 
         System.out.println("____________________________________________________________");
     }
+
+    /**
+     * Displays tasks that match the given keyword.
+     *
+     * @param matchingTasks The list of tasks that match the keyword.
+     * @param keyword The keyword used for the search.
+     */
+    public void showMatchingTasks(ArrayList<Task> matchingTasks, String keyword) {
+        System.out.println("____________________________________________________________");
+        System.out.println(" Here are the matching tasks in your list for \"" + keyword + "\":");
+
+        if (matchingTasks.isEmpty()) {
+            System.out.println("   No matching tasks found.");
+        } else {
+            for (int i = 0; i < matchingTasks.size(); i++) {
+                System.out.println(" " + (i + 1) + ". " + matchingTasks.get(i));
+            }
+        }
+
+        System.out.println("____________________________________________________________");
+    }
 }
