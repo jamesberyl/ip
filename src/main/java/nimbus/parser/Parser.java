@@ -17,7 +17,7 @@ public class Parser {
     }
 
     public enum Command {
-        BYE, LIST, TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, FIND_DATE, CLEAR;
+        BYE, LIST, TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, FIND_DATE, FIND, CLEAR;
 
         public static Command parseCommand(String input) throws NimbusException {
             String command = input.split(" ")[0].toUpperCase();
@@ -49,6 +49,7 @@ public class Parser {
             case UNMARK -> taskList.markTask(input, false);
             case DELETE -> taskList.deleteTask(input);
             case FIND_DATE -> taskList.findTasksByDate(input);
+            case FIND -> taskList.findTasksByKeyword(input);
             case CLEAR -> taskList.clearAllTasks(ui);
             default -> throw new NimbusException("Oops! I don't recognize that command.");
         }
