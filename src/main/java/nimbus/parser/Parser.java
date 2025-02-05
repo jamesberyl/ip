@@ -55,33 +55,55 @@ public class Parser {
      * Processes the user input by identifying the command and executing the corresponding action.
      *
      * @param input The user input command string.
+     * @return A string containing the response message.
      * @throws NimbusException If the input is invalid, unrecognized, or causes an error during processing.
      */
-    public void processCommand(String input) throws NimbusException {
+    public String processCommand(String input) throws NimbusException {
         if (input.isEmpty()) {
             throw new NimbusException("Oops! It seems like you entered nothing.");
         }
 
         Command command = Command.parseCommand(input);
+        String response;
 
         switch (command) {
-            case BYE -> {
-                ui.showExitMessage();
-                return;
-            }
-            case LIST -> ui.showTaskList(taskList.getTasks());
-            case TODO -> taskList.addTodoTask(input);
-            case DEADLINE -> taskList.addDeadlineTask(input);
-            case EVENT -> taskList.addEventTask(input);
-            case MARK -> taskList.markTask(input, true);
-            case UNMARK -> taskList.markTask(input, false);
-            case DELETE -> taskList.deleteTask(input);
-            case FIND_DATE -> taskList.findTasksByDate(input);
-            case FIND -> taskList.findTasksByKeyword(input);
-            case CLEAR -> taskList.clearAllTasks(ui);
-            default -> throw new NimbusException("Oops! I don't recognize that command.");
+        case BYE -> {
+            response = ui.showExitMessage();  // Return exit message for JavaFX
+        }
+        case LIST -> {
+            response = ui.showTaskList(taskList.getTasks());
+        }
+        case TODO -> {
+            response = taskList.addTodoTask(input);
+        }
+        case DEADLINE -> {
+            response = taskList.addDeadlineTask(input);
+        }
+        case EVENT -> {
+            response = taskList.addEventTask(input);
+        }
+        case MARK -> {
+            response = taskList.markTask(input, true);
+        }
+        case UNMARK -> {
+            response = taskList.markTask(input, false);
+        }
+        case DELETE -> {
+            response = taskList.deleteTask(input);
+        }
+        case FIND_DATE -> {
+            response = taskList.findTasksByDate(input);
+        }
+        case FIND -> {
+            response = taskList.findTasksByKeyword(input);
+        }
+        case CLEAR -> {
+            response = taskList.clearAllTasks(ui);
+        }
+        default -> throw new NimbusException("Oops! I don't recognize that command.");
         }
 
         storage.saveTasks(taskList.getTasks());
+        return response;
     }
 }

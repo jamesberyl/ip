@@ -22,7 +22,7 @@ public class Nimbus {
      *
      * @param filepath The path to the file where tasks are stored.
      */
-    public Nimbus(String filepath) {
+    public Nimbus(String filepath) throws NimbusException {
         this.ui = new UI();
         this.storage = new Storage(filepath);
         this.taskList = new TaskList(storage, ui);
@@ -30,34 +30,28 @@ public class Nimbus {
     }
 
     /**
-     * Starts the Nimbus chatbot, displaying the welcome message and
-     * continuously processing user commands until the exit command is received.
+     * Default constructor for JavaFX GUI.
+     * Uses the default storage file path.
      */
-    public void run() {
-        ui.showWelcomeMessage();
-        boolean isRunning = true;
-
-        while (isRunning) {
-            try {
-                String input = ui.readCommand().trim();
-                if (input.equalsIgnoreCase("bye")) {
-                    ui.showExitMessage();
-                    break;
-                }
-                parser.processCommand(input);
-            } catch (NimbusException e) {
-                ui.showErrorMessage(e.getMessage());
-            }
-        }
+    public Nimbus() throws NimbusException {
+        this("./data/nimbus.txt");
     }
 
     /**
-     * The entry point of the Nimbus application.
-     * Initializes the Nimbus chatbot with the default storage file path and starts it.
+     * Processes user input and returns Nimbus's response.
+     * This method is used by the GUI to interact with the chatbot.
      *
-     * @param args Command-line arguments (not used in this application).
+     * @param input The user input string.
+     * @return The chatbot's response.
      */
-    public static void main(String[] args) {
-        new Nimbus("./data/nimbus.txt").run();
+    public String getResponse(String input) {
+        try {
+            if (input.equalsIgnoreCase("bye")) {
+                return ui.showExitMessage();
+            }
+            return parser.processCommand(input);
+        } catch (NimbusException e) {
+            return ui.showErrorMessage(e.getMessage());
+        }
     }
 }

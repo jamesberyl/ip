@@ -30,7 +30,7 @@ public class TaskList {
      * @param storage The storage component to persist tasks.
      * @param ui The UI component to display messages to the user.
      */
-    public TaskList(Storage storage, UI ui) {
+    public TaskList(Storage storage, UI ui) throws NimbusException {
         this.storage = storage;
         this.ui = ui;
         this.tasks = storage.loadTasks();
@@ -51,14 +51,14 @@ public class TaskList {
      * @param input The user input containing the task description.
      * @throws NimbusException If the description is empty.
      */
-    public void addTodoTask(String input) throws NimbusException {
+    public String addTodoTask(String input) throws NimbusException {
         if (input.length() <= 5) {
             throw new NimbusException("Oops! The description of a todo cannot be empty.");
         }
         String description = input.substring(5).trim();
         Task task = new Todo(description);
         tasks.add(task);
-        ui.showTaskAdded(task, tasks.size());
+        return ui.showTaskAdded(task, tasks.size());
     }
 
     /**
@@ -67,14 +67,14 @@ public class TaskList {
      * @param input The user input containing the task description and deadline.
      * @throws NimbusException If the input format is invalid.
      */
-    public void addDeadlineTask(String input) throws NimbusException {
+    public String addDeadlineTask(String input) throws NimbusException {
         if (!input.contains("/by")) {
             throw new NimbusException("Oops! Deadlines need a description and a '/by' date.");
         }
         String[] parts = input.substring(9).split(" /by ");
         Task task = new Deadline(parts[0].trim(), parts[1].trim());
         tasks.add(task);
-        ui.showTaskAdded(task, tasks.size());
+        return ui.showTaskAdded(task, tasks.size());
     }
 
     /**
@@ -83,14 +83,14 @@ public class TaskList {
      * @param input The user input containing the task description, start time, and end time.
      * @throws NimbusException If the input format is invalid.
      */
-    public void addEventTask(String input) throws NimbusException {
+    public String addEventTask(String input) throws NimbusException {
         if (!input.contains("/from") || !input.contains("/to")) {
             throw new NimbusException("Oops! Events need a description, '/from' time, and '/to' time.");
         }
         String[] parts = input.substring(6).split(" /from | /to ");
         Task task = new Event(parts[0].trim(), parts[1].trim(), parts[2].trim());
         tasks.add(task);
-        ui.showTaskAdded(task, tasks.size());
+        return ui.showTaskAdded(task, tasks.size());
     }
 
     /**
@@ -100,7 +100,7 @@ public class TaskList {
      * @param isDone True to mark the task as done, false to unmark it.
      * @throws NimbusException If the task number is invalid.
      */
-    public void markTask(String input, boolean isDone) throws NimbusException {
+    public String markTask(String input, boolean isDone) throws NimbusException {
         int taskNumber = parseTaskNumber(input);
         Task task = tasks.get(taskNumber);
         if (isDone) {
@@ -108,7 +108,7 @@ public class TaskList {
         } else {
             task.unmark();
         }
-        ui.showTaskMarked(task, isDone);
+        return ui.showTaskMarked(task, isDone);
     }
 
     /**
@@ -117,26 +117,21 @@ public class TaskList {
      * @param input The user input containing the task number to be deleted.
      * @throws NimbusException If the task number is invalid.
      */
-    public void deleteTask(String input) throws NimbusException {
+    public String deleteTask(String input) throws NimbusException {
         int taskNumber = parseTaskNumber(input);
         Task removedTask = tasks.remove(taskNumber);
-        ui.showTaskDeleted(removedTask, tasks.size());
+        return ui.showTaskDeleted(removedTask, tasks.size());
     }
 
     /**
-     * Clears all tasks from the task list after user confirmation.
+     * Clears all tasks from the task list.
      *
      * @param ui The UI component to handle user interaction.
      */
-    public void clearAllTasks(UI ui) {
-        ui.showClearConfirmation();
-        if (ui.readCommand().equalsIgnoreCase("y")) {
-            tasks.clear();
-            storage.saveTasks(tasks);
-            ui.showAllTasksCleared();
-        } else {
-            ui.showTaskClearingCancelled();
-        }
+    public String clearAllTasks(UI ui) throws NimbusException {
+        tasks.clear();
+        storage.saveTasks(tasks);
+        return ui.showAllTasksCleared();
     }
 
     /**
@@ -144,7 +139,7 @@ public class TaskList {
      *
      * @param input The user input containing the date to search for tasks.
      */
-    public void findTasksByDate(String input) {
+    public String findTasksByDate(String input) {
         try {
             String dateStr = input.split(" ", 2)[1].trim();
             LocalDate searchDate = null;
@@ -172,11 +167,11 @@ public class TaskList {
                         + " - 15 10 2023");
             }
 
-            UI.showTasksOnDate(searchDate, tasks);
+            return UI.showTasksOnDate(searchDate, tasks);
         } catch (ArrayIndexOutOfBoundsException e) {
-            ui.showErrorMessage("Oops! Please enter a date after 'find_date'. Example: find_date 2023-12-01");
+            return ui.showErrorMessage("Oops! Please enter a date after 'find_date'. Example: find_date 2023-12-01");
         } catch (NimbusException e) {
-            ui.showErrorMessage(e.getMessage());
+            return ui.showErrorMessage(e.getMessage());
         }
     }
 
@@ -204,7 +199,7 @@ public class TaskList {
      *
      * @param input The user input containing the keyword to search for.
      */
-    public void findTasksByKeyword(String input) {
+    public String findTasksByKeyword(String input) {
         try {
             String keyword = input.split(" ", 2)[1].trim();
             ArrayList<Task> matchingTasks = new ArrayList<>();
@@ -215,9 +210,9 @@ public class TaskList {
                 }
             }
 
-            ui.showMatchingTasks(matchingTasks, keyword);
+            return ui.showMatchingTasks(matchingTasks, keyword);
         } catch (ArrayIndexOutOfBoundsException e) {
-            ui.showErrorMessage("Oops! Please enter a keyword after 'find'. Example: find book");
+            return ui.showErrorMessage("Oops! Please enter a keyword after 'find'. Example: find book");
         }
     }
 }
