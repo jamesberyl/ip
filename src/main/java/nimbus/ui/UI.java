@@ -97,29 +97,10 @@ public class UI {
     }
 
     /**
-     * Displays a confirmation prompt before clearing all tasks.
-     */
-    public void showClearConfirmation() {
-        System.out.println("____________________________________________________________");
-        System.out.println(" ⚠ WARNING: This will delete ALL tasks permanently.");
-        System.out.println(" Are you sure you want to proceed? (y/n)");
-        System.out.println("____________________________________________________________");
-    }
-
-    /**
      * Displays a message when all tasks have been cleared.
      */
     public String showAllTasksCleared() {
         return "✅ All tasks have been cleared.";
-    }
-
-    /**
-     * Displays a message when the task-clearing operation is canceled.
-     */
-    public void showTaskClearingCancelled() {
-        System.out.println("____________________________________________________________");
-        System.out.println(" ❌ Task clearing cancelled.");
-        System.out.println("____________________________________________________________");
     }
 
     /**

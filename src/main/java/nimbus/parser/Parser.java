@@ -68,7 +68,7 @@ public class Parser {
 
         switch (command) {
         case BYE -> {
-            response = ui.showExitMessage();  // Return exit message for JavaFX
+            response = ui.showExitMessage();
         }
         case LIST -> {
             response = ui.showTaskList(taskList.getTasks());
