@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 
 /**
  * Controller for the main GUI.
+ * This class handles user interactions, displays dialog boxes, and manages input processing.
  */
 public class MainWindow extends AnchorPane {
     @FXML
@@ -28,19 +29,30 @@ public class MainWindow extends AnchorPane {
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/User.png"));
     private Image nimbusImage = new Image(this.getClass().getResourceAsStream("/images/Nimbus.png"));
 
+    /**
+     * Initializes the main window.
+     * This method binds the vertical scroll property of the scroll pane to the height property
+     * of the dialog container, ensuring that new messages appear at the bottom.
+     */
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
     }
 
-    /** Injects the Nimbus instance */
+    /**
+     * Injects the Nimbus instance into the controller.
+     *
+     * @param n The Nimbus chatbot instance.
+     */
     public void setNimbus(Nimbus n) {
         nimbus = n;
     }
 
     /**
-     * Creates two dialog boxes, one echoing user input and the other containing Duke's reply and then appends them to
-     * the dialog container. Clears the user input after processing.
+     * Handles user input by creating dialog boxes.
+     * This method retrieves the user's input, generates a response from the Nimbus chatbot,
+     * creates dialog boxes for both the user and the chatbot, appends them to the dialog container,
+     * and then clears the user input field.
      */
     @FXML
     private void handleUserInput() {

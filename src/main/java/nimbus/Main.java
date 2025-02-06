@@ -10,15 +10,25 @@ import javafx.stage.Stage;
 import nimbus.exceptions.NimbusException;
 
 /**
- * A GUI for Duke using FXML.
+ * The main entry point for the Nimbus application, providing a graphical user interface (GUI) using JavaFX and FXML.
  */
 public class Main extends Application {
 
     private Nimbus nimbus = new Nimbus();
 
+    /**
+     * Constructs a Main instance and initializes the Nimbus chatbot.
+     *
+     * @throws NimbusException If there is an error initializing the chatbot.
+     */
     public Main() throws NimbusException {
     }
 
+    /**
+     * Starts the JavaFX application and sets up the main window.
+     *
+     * @param stage The primary stage for the application.
+     */
     @Override
     public void start(Stage stage) {
         try {
