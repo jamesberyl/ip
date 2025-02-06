@@ -1,5 +1,10 @@
 package nimbus;
 
+import javafx.animation.PauseTransition;
+import javafx.application.Platform;
+import javafx.util.Duration;
+
+
 import nimbus.ui.UI;
 import nimbus.storage.Storage;
 import nimbus.tasklist.TaskList;
@@ -47,7 +52,13 @@ public class Nimbus {
     public String getResponse(String input) {
         try {
             if (input.equalsIgnoreCase("bye")) {
-                return ui.showExitMessage();
+                String exitMessage = ui.showExitMessage();
+
+                PauseTransition delay = new PauseTransition(Duration.seconds(2));
+                delay.setOnFinished(event -> Platform.exit());
+                delay.play();
+
+                return exitMessage;
             }
             return parser.processCommand(input);
         } catch (NimbusException e) {
