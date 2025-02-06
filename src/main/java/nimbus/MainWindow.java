@@ -9,7 +9,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
 
-
 /**
  * Controller for the main GUI.
  * This class handles user interactions, displays dialog boxes, and manages input processing.
@@ -37,6 +36,10 @@ public class MainWindow extends AnchorPane {
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
+        dialogContainer.getChildren().add(
+                DialogBox.getNimbusDialog(" Hey there! I'm Nimbus, your assistant. \n"
+                        + "How can I make your day brighter?", nimbusImage)
+        );
     }
 
     /**
