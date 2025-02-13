@@ -31,12 +31,21 @@ public class Main extends Application {
      */
     @Override
     public void start(Stage stage) {
+        assert stage != null : "Primary stage should not be null";
+
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));
+            assert fxmlLoader.getLocation() != null : "FXML file not found at the specified location";
+
             AnchorPane ap = fxmlLoader.load();
+            assert ap != null : "Failed to load AnchorPane from FXML";
+
             Scene scene = new Scene(ap);
             stage.setScene(scene);
-            fxmlLoader.<MainWindow>getController().setNimbus(nimbus);  // inject the Duke instance
+
+            assert fxmlLoader.getController() != null : "FXML controller is not initialized";
+            fxmlLoader.<MainWindow>getController().setNimbus(nimbus);
+
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
