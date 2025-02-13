@@ -33,12 +33,17 @@ public class DialogBox extends HBox {
     private DialogBox(String text, Image img) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource("/view/DialogBox.fxml"));
+            assert fxmlLoader.getLocation() != null : "FXML file not found at the specified location";
+
             fxmlLoader.setController(this);
             fxmlLoader.setRoot(this);
             fxmlLoader.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        assert dialog != null : "Label 'dialog' is not initialized (FXML loading issue)";
+        assert displayPicture != null : "ImageView 'displayPicture' is not initialized (FXML loading issue)";
 
         dialog.setText(text);
         displayPicture.setImage(img);

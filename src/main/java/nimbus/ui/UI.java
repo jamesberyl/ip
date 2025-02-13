@@ -36,6 +36,8 @@ public class UI {
      * @param tasks The list of tasks to display.
      */
     public String showTaskList(ArrayList<Task> tasks) {
+        assert tasks != null : "Task list should not be null";
+
         StringBuilder output = new StringBuilder();
         if (tasks.isEmpty()) {
             output.append("Hmm... Your task list is empty. Ready to add something?");
@@ -55,6 +57,9 @@ public class UI {
      * @param size The current number of tasks in the list.
      */
     public String showTaskAdded(Task task, int size) {
+        assert task != null : "Task should not be null when adding";
+        assert size >= 0 : "Task list size should not be negative";
+
         return "Got it. I've added this task:\n"
                 + "  " + task + "\n"
                 + "Now you have " + size + " tasks in the list.";
@@ -67,6 +72,8 @@ public class UI {
      * @param isDone True if the task was marked as done, false if unmarked.
      */
     public String showTaskMarked(Task task, boolean isDone) {
+        assert task != null : "Task to be marked should not be null";
+
         if (isDone) {
             return "Nice! I've marked this task as done:\n  " + task;
         } else {
@@ -81,6 +88,9 @@ public class UI {
      * @param size The current number of tasks in the list after deletion.
      */
     public String showTaskDeleted(Task task, int size) {
+        assert task != null : "Deleted task should not be null";
+        assert size >= 0 : "Task list size after deletion should not be negative";
+
         return "Noted. I've removed this task:\n"
                 + "  " + task + "\n"
                 + "Now you have " + size + " tasks in the list.";
@@ -100,6 +110,9 @@ public class UI {
      * @param tasks The list of tasks to filter and display.
      */
     public static String showTasksOnDate(LocalDate searchDate, ArrayList<Task> tasks) {
+        assert searchDate != null : "Search date should not be null";
+        assert tasks != null : "Task list should not be null";
+
         StringBuilder output = new StringBuilder();
         output.append("Tasks on ").append(searchDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy"))).append(":\n");
 
@@ -129,6 +142,9 @@ public class UI {
      * @param keyword The keyword used for the search.
      */
     public String showMatchingTasks(ArrayList<Task> matchingTasks, String keyword) {
+        assert matchingTasks != null : "Matching tasks list should not be null";
+        assert keyword != null && !keyword.isBlank() : "Search keyword should not be null or empty";
+
         StringBuilder output = new StringBuilder();
         output.append("Here are the matching tasks for \"").append(keyword).append("\":\n");
 
