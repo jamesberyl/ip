@@ -52,6 +52,8 @@ public class TaskList {
      * @throws NimbusException If the description is empty.
      */
     public String addTodoTask(String input) throws NimbusException {
+        assert input != null : "Input for Todo task should not be null";
+
         if (input.length() <= 5) {
             throw new NimbusException("Oops! The description of a todo cannot be empty.");
         }
@@ -68,6 +70,9 @@ public class TaskList {
      * @throws NimbusException If the input format is invalid.
      */
     public String addDeadlineTask(String input) throws NimbusException {
+        assert input != null : "Input for Deadline task should not be null";
+        assert input.contains("/by") : "Deadline task must contain '/by'";
+
         if (!input.contains("/by")) {
             throw new NimbusException("Oops! Deadlines need a description and a '/by' date.");
         }
@@ -84,6 +89,9 @@ public class TaskList {
      * @throws NimbusException If the input format is invalid.
      */
     public String addEventTask(String input) throws NimbusException {
+        assert input != null : "Input for Event task should not be null";
+        assert input.contains("/from") && input.contains("/to") : "Event task must contain '/from' and '/to'";
+
         if (!input.contains("/from") || !input.contains("/to")) {
             throw new NimbusException("Oops! Events need a description, '/from' time, and '/to' time.");
         }
@@ -102,6 +110,8 @@ public class TaskList {
      */
     public String markTask(String input, boolean isDone) throws NimbusException {
         int taskNumber = parseTaskNumber(input);
+        assert taskNumber >= 0 && taskNumber < tasks.size() : "Task number should be within valid range";
+
         Task task = tasks.get(taskNumber);
         if (isDone) {
             task.markAsDone();
@@ -119,6 +129,8 @@ public class TaskList {
      */
     public String deleteTask(String input) throws NimbusException {
         int taskNumber = parseTaskNumber(input);
+        assert taskNumber >= 0 && taskNumber < tasks.size() : "Task number should be within valid range";
+
         Task removedTask = tasks.remove(taskNumber);
         return ui.showTaskDeleted(removedTask, tasks.size());
     }
@@ -183,6 +195,9 @@ public class TaskList {
      * @throws NimbusException If the task number is invalid or out of range.
      */
     private int parseTaskNumber(String input) throws NimbusException {
+        assert input != null : "Task number input should not be null";
+        assert input.split(" ").length > 1 : "Task number input should contain a number";
+
         try {
             int taskNumber = Integer.parseInt(input.split(" ")[1]) - 1;
             if (taskNumber < 0 || taskNumber >= tasks.size()) {
