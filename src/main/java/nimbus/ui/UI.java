@@ -14,16 +14,6 @@ import nimbus.tasks.Task;
  */
 public class UI {
 
-
-    /**
-     * Displays a welcome message when the application starts.
-     */
-    public String showWelcomeMessage() {
-        return "Hey there! I'm Nimbus, your assistant. ☁️\n"
-                + "How can I make your day brighter?";
-    }
-
-
     /**
      * Displays an exit message when the application is terminated.
      */

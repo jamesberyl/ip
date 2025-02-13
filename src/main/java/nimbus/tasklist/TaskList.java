@@ -19,9 +19,9 @@ import nimbus.ui.UI;
  * Handles operations such as adding, marking, deleting, and searching tasks.
  */
 public class TaskList {
-    private ArrayList<Task> tasks;
-    private Storage storage;
-    private UI ui;
+    private final ArrayList<Task> tasks;
+    private final Storage storage;
+    private final UI ui;
 
     /**
      * Constructs a TaskList with the specified storage and UI components.
@@ -220,7 +220,6 @@ public class TaskList {
                     matchingTasks.add(task);
                 }
             }
-
             return ui.showMatchingTasks(matchingTasks, keyword);
         } catch (ArrayIndexOutOfBoundsException e) {
             return ui.showErrorMessage("Oops! Please enter a keyword after 'find'. Example: find book");

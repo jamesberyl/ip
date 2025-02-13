@@ -17,10 +17,10 @@ import nimbus.exceptions.NimbusException;
  * and manages the application's main execution flow.
  */
 public class Nimbus {
-    private UI ui;
-    private Storage storage;
-    private TaskList taskList;
-    private Parser parser;
+    private final UI ui;
+    private final Storage storage;
+    private final TaskList taskList;
+    private final Parser parser;
 
     /**
      * Constructs a Nimbus chatbot instance with the specified file path for storage.

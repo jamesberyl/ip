@@ -42,7 +42,6 @@ public class Storage {
         File file = new File(filePath);
         File parentDir = file.getParentFile();
 
-        // Ensure the directory exists before writing
         if (parentDir != null && !parentDir.exists()) {
             boolean created = parentDir.mkdirs();
             if (!created) {
@@ -71,7 +70,6 @@ public class Storage {
         ArrayList<Task> tasks = new ArrayList<>();
         File file = new File(filePath);
 
-        // If file does not exist, return empty list (no error thrown)
         if (!file.exists()) {
             return tasks;
         }
@@ -82,7 +80,6 @@ public class Storage {
                 try {
                     tasks.add(parseTask(line));
                 } catch (Exception e) {
-                    // Instead of printing errors, add a placeholder task or log it differently
                     System.err.println("Skipping corrupted task in storage: " + line);
                 }
             }
@@ -111,17 +108,17 @@ public class Storage {
 
         try {
             switch (type) {
-            case "T": // Todo Task
+            case "T":
                 return new Todo(description);
 
-            case "D": // Deadline Task
+            case "D":
                 if (parts.length < 4) {
                     throw new NimbusException("Invalid deadline format: " + line);
                 }
                 String deadline = parts[3].trim();
                 return new Deadline(description, deadline);
 
-            case "E": // Event Task
+            case "E":
                 if (parts.length < 5) {
                     throw new NimbusException("Invalid event format: " + line);
                 }
