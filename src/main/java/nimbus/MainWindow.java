@@ -22,9 +22,7 @@ public class MainWindow extends AnchorPane {
     private TextField userInput;
     @FXML
     private Button sendButton;
-
     private Nimbus nimbus;
-
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/User.png"));
     private Image nimbusImage = new Image(this.getClass().getResourceAsStream("/images/Nimbus.png"));
 

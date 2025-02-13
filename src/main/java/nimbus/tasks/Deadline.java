@@ -23,7 +23,6 @@ public class Deadline extends Task {
             DateTimeFormatter.ofPattern("dd MM yyyy HHmm")
     );
 
-
     /**
      * Constructs a Deadline task with the specified description and due date/time.
      *

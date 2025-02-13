@@ -209,7 +209,6 @@ public class TaskList {
                     matchingTasks.add(task);
                 }
             }
-
             return ui.showMatchingTasks(matchingTasks, keyword);
         } catch (ArrayIndexOutOfBoundsException e) {
             return ui.showErrorMessage("Oops! Please enter a keyword after 'find'. Example: find book");
