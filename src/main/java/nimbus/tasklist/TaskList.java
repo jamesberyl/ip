@@ -71,7 +71,6 @@ public class TaskList {
      */
     public String addDeadlineTask(String input) throws NimbusException {
         assert input != null : "Input for Deadline task should not be null";
-        assert input.contains("/by") : "Deadline task must contain '/by'";
 
         if (!input.contains("/by")) {
             throw new NimbusException("Oops! Deadlines need a description and a '/by' date.");
@@ -90,7 +89,6 @@ public class TaskList {
      */
     public String addEventTask(String input) throws NimbusException {
         assert input != null : "Input for Event task should not be null";
-        assert input.contains("/from") && input.contains("/to") : "Event task must contain '/from' and '/to'";
 
         if (!input.contains("/from") || !input.contains("/to")) {
             throw new NimbusException("Oops! Events need a description, '/from' time, and '/to' time.");
@@ -110,7 +108,6 @@ public class TaskList {
      */
     public String markTask(String input, boolean isDone) throws NimbusException {
         int taskNumber = parseTaskNumber(input);
-        assert taskNumber >= 0 && taskNumber < tasks.size() : "Task number should be within valid range";
 
         Task task = tasks.get(taskNumber);
         if (isDone) {
@@ -129,7 +126,6 @@ public class TaskList {
      */
     public String deleteTask(String input) throws NimbusException {
         int taskNumber = parseTaskNumber(input);
-        assert taskNumber >= 0 && taskNumber < tasks.size() : "Task number should be within valid range";
 
         Task removedTask = tasks.remove(taskNumber);
         return ui.showTaskDeleted(removedTask, tasks.size());
