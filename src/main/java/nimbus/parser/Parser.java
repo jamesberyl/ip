@@ -11,9 +11,9 @@ import nimbus.ui.UI;
  * on the task list, UI, and storage components.
  */
 public class Parser {
-    private TaskList taskList;
-    private UI ui;
-    private Storage storage;
+    private final TaskList taskList;
+    private final UI ui;
+    private final Storage storage;
 
     /**
      * Constructs a Parser with the specified task list, UI, and storage components.
@@ -42,12 +42,16 @@ public class Parser {
          * @throws NimbusException If the command is unrecognized.
          */
         public static Command parseCommand(String input) throws NimbusException {
-            String command = input.split(" ")[0].toUpperCase();
+            String commandKeyword = extractCommandKeyword(input);
             try {
-                return Command.valueOf(command);
+                return Command.valueOf(commandKeyword);
             } catch (IllegalArgumentException e) {
                 throw new NimbusException("Oops! I don't recognize that command.");
             }
+        }
+
+        private static String extractCommandKeyword(String input) {
+            return input.split(" ")[0].toUpperCase();
         }
     }
 
