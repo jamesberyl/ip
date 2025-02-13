@@ -23,8 +23,8 @@ public class MainWindow extends AnchorPane {
     @FXML
     private Button sendButton;
     private Nimbus nimbus;
-    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/User.png"));
-    private Image nimbusImage = new Image(this.getClass().getResourceAsStream("/images/Nimbus.png"));
+    private final Image userImage = new Image(this.getClass().getResourceAsStream("/images/User.png"));
+    private final Image nimbusImage = new Image(this.getClass().getResourceAsStream("/images/Nimbus.png"));
 
     /**
      * Initializes the main window.

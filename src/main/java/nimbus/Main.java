@@ -13,7 +13,7 @@ import nimbus.exceptions.NimbusException;
  * The main entry point for the Nimbus application, providing a graphical user interface (GUI) using JavaFX and FXML.
  */
 public class Main extends Application {
-    private Nimbus nimbus = new Nimbus();
+    private final Nimbus nimbus = new Nimbus();
 
     /**
      * Constructs a Main instance and initializes the Nimbus chatbot.
