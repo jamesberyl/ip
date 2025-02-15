@@ -35,6 +35,10 @@ public class Deadline extends Task {
         this.by = parseDateTime(by);
     }
 
+    public LocalDateTime getBy() {
+        return by;
+    }
+
     /**
      * Parses the date and time string into a LocalDateTime object.
      * Supports multiple date/time formats.

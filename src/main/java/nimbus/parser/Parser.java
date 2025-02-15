@@ -32,7 +32,7 @@ public class Parser {
      * Represents the list of supported commands in the Nimbus application.
      */
     public enum Command {
-        BYE, LIST, TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, FIND_DATE, FIND, CLEAR;
+        BYE, LIST, TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, FIND_DATE, FIND, CLEAR, SORT;
 
         /**
          * Parses the user input and returns the corresponding command.
@@ -103,6 +103,9 @@ public class Parser {
         }
         case CLEAR -> {
             response = taskList.clearAllTasks(ui);
+        }
+        case SORT -> {
+            response = taskList.sortTasks();
         }
         default -> throw new NimbusException("Oops! I don't recognize that command.");
         }
