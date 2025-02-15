@@ -1,5 +1,7 @@
 package nimbus.tasks;
 
+import java.time.LocalDateTime;
+
 /**
  * Represents an abstract Task in the Nimbus Chatbot application.
  * A Task has a description and a completion status. This class serves as the
@@ -8,6 +10,7 @@ package nimbus.tasks;
 public abstract class Task {
     protected String description;
     protected boolean isDone;
+    protected LocalDateTime createdAt;
 
     /**
      * Constructs a Task with the specified description.
@@ -18,6 +21,11 @@ public abstract class Task {
     public Task(String description) {
         this.description = description;
         this.isDone = false;
+        this.createdAt = LocalDateTime.now();
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
     /**

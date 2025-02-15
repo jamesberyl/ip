@@ -158,4 +158,12 @@ public class UI {
 
         return output.toString().trim();
     }
+
+    public String showSortedTasks(ArrayList<Task> sortedTasks) {
+        StringBuilder response = new StringBuilder("Tasks sorted successfully:\n");
+        for (int i = 0; i < sortedTasks.size(); i++) {
+            response.append((i + 1)).append(". ").append(sortedTasks.get(i)).append("\n");
+        }
+        return response.toString();
+    }
 }

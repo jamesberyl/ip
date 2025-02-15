@@ -37,6 +37,14 @@ public class Event extends Task {
         this.to = parseDateTime(to);
     }
 
+    public LocalDateTime getFrom() {
+        return from;
+    }
+
+    public LocalDateTime getTo() {
+        return to;
+    }
+
     /**
      * Parses the date and time string into a LocalDateTime object.
      * Supports multiple date/time formats.

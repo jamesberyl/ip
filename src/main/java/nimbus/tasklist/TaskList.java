@@ -1,9 +1,11 @@
 package nimbus.tasklist;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import nimbus.exceptions.NimbusException;
 import nimbus.storage.Storage;
@@ -224,6 +226,33 @@ public class TaskList {
         } catch (ArrayIndexOutOfBoundsException e) {
             return ui.showErrorMessage("Oops! Please enter a keyword after 'find'. Example: find book");
         }
+    }
+    /**
+     * Sorts the tasks in the chronological order:
+     * 1. Events (earliest start time first, if equal, sort by earliest end time)
+     * 2. Deadlines (earliest due date first)
+     * 3. Todo tasks (sorted by creation time)
+     *
+     * @return A message indicating that tasks have been sorted.
+     */
+    public String sortTasks() {
+        tasks.sort(Comparator.comparing((Task task) -> {
+            if (task instanceof Event event) {
+                return event.getFrom(); // Sort Events by start time
+            } else if (task instanceof Deadline deadline) {
+                return deadline.getBy(); // Sort Deadlines by due date
+            } else {
+                return task.getCreatedAt(); // Sort Todos by creation time
+            }
+        }).thenComparing(task -> {
+            if (task instanceof Event event) {
+                return event.getTo(); // Sort Events by end time (breaking ties)
+            } else {
+                return LocalDateTime.MAX; // Assign max value to ensure Todo tasks don't interfere
+            }
+        }));
+
+        return ui.showSortedTasks(tasks);
     }
 }
 
