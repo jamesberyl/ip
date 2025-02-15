@@ -3,6 +3,7 @@ package nimbus.ui;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 
 import nimbus.tasks.Deadline;
 import nimbus.tasks.Event;
@@ -163,6 +164,26 @@ public class UI {
         StringBuilder response = new StringBuilder("Tasks sorted successfully:\n");
         for (int i = 0; i < sortedTasks.size(); i++) {
             response.append((i + 1)).append(". ").append(sortedTasks.get(i)).append("\n");
+        }
+        return response.toString();
+    }
+
+    public String showTagAdded(Task task, String tag) {
+        return "Added tag #" + tag + " to task: " + task.getDescription();
+    }
+
+    public String showTagRemoved(Task task, String tag) {
+        return "Removed tag #" + tag + " from task: " + task.getDescription();
+    }
+
+    public String showTasksWithTag(String tag, List<Task> tasks) {
+        if (tasks.isEmpty()) {
+            return "No tasks found with tag #" + tag;
+        }
+
+        StringBuilder response = new StringBuilder("Tasks with tag #" + tag + ":\n");
+        for (int i = 0; i < tasks.size(); i++) {
+            response.append((i + 1)).append(". ").append(tasks.get(i)).append("\n");
         }
         return response.toString();
     }

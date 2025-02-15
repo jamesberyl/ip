@@ -1,6 +1,9 @@
 package nimbus.tasks;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Represents an abstract Task in the Nimbus Chatbot application.
@@ -11,6 +14,7 @@ public abstract class Task {
     protected String description;
     protected boolean isDone;
     protected LocalDateTime createdAt;
+    protected Set<String> tags;
 
     /**
      * Constructs a Task with the specified description.
@@ -22,10 +26,31 @@ public abstract class Task {
         this.description = description;
         this.isDone = false;
         this.createdAt = LocalDateTime.now();
+        this.tags = new HashSet<>();
     }
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
+    }
+
+    public void addTag(String tag) {
+        tags.add(tag.toLowerCase());
+    }
+
+    public void removeTag(String tag) {
+        tags.remove(tag.toLowerCase());
+    }
+
+    public boolean hasTag(String tag) {
+        return tags.contains(tag.toLowerCase());
+    }
+
+    public Set<String> getTags() {
+        return tags;
+    }
+
+    public String getTagString() {
+        return tags.isEmpty() ? "" : " Tags: " + tags.stream().map(tag -> "#" + tag).collect(Collectors.joining(", "));
     }
 
     /**

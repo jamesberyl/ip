@@ -6,6 +6,8 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import nimbus.exceptions.NimbusException;
 import nimbus.storage.Storage;
@@ -194,7 +196,6 @@ public class TaskList {
      */
     private int parseTaskNumber(String input) throws NimbusException {
         assert input != null : "Task number input should not be null";
-        assert input.split(" ").length > 1 : "Task number input should contain a number";
 
         try {
             int taskNumber = Integer.parseInt(input.split(" ")[1]) - 1;
@@ -253,6 +254,52 @@ public class TaskList {
         }));
 
         return ui.showSortedTasks(tasks);
+    }
+
+    public String tagTask(String input) throws NimbusException {
+        String[] parts = input.split(" ", 3);
+        if (parts.length < 3) {
+            throw new NimbusException("Oops! Usage: tag [task_number] [tag]");
+        }
+
+        int taskNumber = Integer.parseInt(parts[1]) - 1;
+        if (taskNumber < 0 || taskNumber >= tasks.size()) {
+            throw new NimbusException("Oops! Task number out of range.");
+        }
+
+        String tag = parts[2].trim().toLowerCase();
+        tasks.get(taskNumber).addTag(tag);
+        return ui.showTagAdded(tasks.get(taskNumber), tag);
+    }
+
+    public String untagTask(String input) throws NimbusException {
+        String[] parts = input.split(" ", 3);
+        if (parts.length < 3) {
+            throw new NimbusException("Oops! Usage: untag [task_number] [tag]");
+        }
+
+        int taskNumber = Integer.parseInt(parts[1]) - 1;
+        if (taskNumber < 0 || taskNumber >= tasks.size()) {
+            throw new NimbusException("Oops! Task number out of range.");
+        }
+
+        String tag = parts[2].trim().toLowerCase();
+        tasks.get(taskNumber).removeTag(tag);
+        return ui.showTagRemoved(tasks.get(taskNumber), tag);
+    }
+
+    public String findTasksByTag(String input) throws NimbusException {
+        String[] parts = input.split(" ", 2);
+        if (parts.length < 2) {
+            throw new NimbusException("Oops! Usage: find_tag [tag]");
+        }
+
+        String tag = parts[1].trim().toLowerCase();
+        List<Task> taggedTasks = tasks.stream()
+                .filter(task -> task.hasTag(tag))
+                .collect(Collectors.toList());
+
+        return ui.showTasksWithTag(tag, taggedTasks);
     }
 }
 
