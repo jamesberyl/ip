@@ -116,19 +116,19 @@ public class UI {
         StringBuilder output = new StringBuilder();
         output.append("Tasks on ").append(searchDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy"))).append(":\n");
 
-        boolean found = false;
+        boolean isFound = false;
         for (Task task : tasks) {
             if (task instanceof Deadline deadline && deadline.isOnDate(searchDate.atStartOfDay())) {
                 output.append("  ").append(task).append("\n");
-                found = true;
+                isFound = true;
             }
             if (task instanceof Event event && event.isOnDate(searchDate.atStartOfDay())) {
                 output.append("  ").append(task).append("\n");
-                found = true;
+                isFound = true;
             }
         }
 
-        if (!found) {
+        if (!isFound) {
             output.append("  No tasks found on this date.");
         }
 
