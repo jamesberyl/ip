@@ -67,7 +67,7 @@ public class Parser {
             throw new NimbusException("Oops! It seems like you entered nothing.");
         }
 
-        Command command = Command.parseCommand(input);
+        Command command = Command.parseCommand(input.trim());
         String response;
 
         switch (command) {

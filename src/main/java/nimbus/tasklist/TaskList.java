@@ -77,7 +77,12 @@ public class TaskList {
         if (!input.contains("/by")) {
             throw new NimbusException("Oops! Deadlines need a description and a '/by' date.");
         }
-        String[] parts = input.substring(9).split(" /by ");
+
+        String[] parts = input.substring(9).split(" /by ", 2);
+        if (parts.length < 2 || parts[1].trim().isEmpty()) {
+            throw new NimbusException("Oops! Please provide a valid due date.");
+        }
+
         Task task = new Deadline(parts[0].trim(), parts[1].trim());
         tasks.add(task);
         return ui.showTaskAdded(task, tasks.size());
@@ -95,7 +100,12 @@ public class TaskList {
         if (!input.contains("/from") || !input.contains("/to")) {
             throw new NimbusException("Oops! Events need a description, '/from' time, and '/to' time.");
         }
-        String[] parts = input.substring(6).split(" /from | /to ");
+
+        String[] parts = input.substring(6).split(" /from | /to ", 3);
+        if (parts.length < 3 || parts[1].trim().isEmpty() || parts[2].trim().isEmpty()) {
+            throw new NimbusException("Oops! Please provide both start and end times.");
+        }
+
         Task task = new Event(parts[0].trim(), parts[1].trim(), parts[2].trim());
         tasks.add(task);
         return ui.showTaskAdded(task, tasks.size());

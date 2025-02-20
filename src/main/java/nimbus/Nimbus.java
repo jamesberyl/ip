@@ -60,7 +60,17 @@ public class Nimbus {
 
                 return exitMessage;
             }
-            return parser.processCommand(input);
+
+            String[] commands = input.split("\\r?\\n|;");
+            StringBuilder responseBuilder = new StringBuilder();
+
+            for (String command : commands) {
+                if (!command.trim().isEmpty()) {
+                    responseBuilder.append(parser.processCommand(command.trim())).append("\n");
+                }
+            }
+
+            return responseBuilder.toString().trim();
         } catch (NimbusException e) {
             return ui.showErrorMessage(e.getMessage());
         }
