@@ -2,8 +2,7 @@ package nimbus.exceptions;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 class NimbusExceptionTest {
 
@@ -31,6 +30,6 @@ class NimbusExceptionTest {
     @Test
     void testNullMessage() {
         NimbusException exception = new NimbusException(null);
-        assertEquals(null, exception.getMessage());
+        assertNull(exception.getMessage());
     }
 }

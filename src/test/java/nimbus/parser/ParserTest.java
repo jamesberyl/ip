@@ -10,8 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ParserTest {
 
@@ -22,7 +21,7 @@ class ParserTest {
     private ByteArrayOutputStream outputStream;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws NimbusException {
         outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
 
@@ -58,7 +57,7 @@ class ParserTest {
     void testProcessCommand_list() throws NimbusException {
         parser.processCommand("list");
         String output = outputStream.toString();
-        assertEquals(true, output.contains("Hmm... Your task list is empty"));
+        assertTrue(output.contains("Hmm... Your task list is empty"));
     }
 
     @Test

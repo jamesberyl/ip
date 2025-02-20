@@ -22,7 +22,7 @@ class TaskListTest {
     private ByteArrayOutputStream outputStream;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws NimbusException {
         outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
 

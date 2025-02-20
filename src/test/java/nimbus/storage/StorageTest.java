@@ -34,7 +34,7 @@ class StorageTest {
     }
 
     @Test
-    void testSaveAndLoadTodoTask() {
+    void testSaveAndLoadTodoTask() throws NimbusException {
         ArrayList<Task> tasksToSave = new ArrayList<>();
         tasksToSave.add(new Todo("Test Todo"));
 
@@ -70,7 +70,7 @@ class StorageTest {
     }
 
     @Test
-    void testLoadFromNonExistentFile() {
+    void testLoadFromNonExistentFile() throws NimbusException {
         File nonExistentFile = new File("non_existent_file.txt");
         Storage newStorage = new Storage(nonExistentFile.getAbsolutePath());
 
