@@ -17,3 +17,4 @@ bin/
 text-ui-test/EXPECTED-UNIX.TXT
 data/nimbus.txt
 text-ui-test/data/nimbus.txt
+text-ui-test/data/test_tasks.txt
