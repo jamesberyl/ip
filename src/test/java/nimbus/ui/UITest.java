@@ -45,14 +45,14 @@ public class UITest {
     @Test
     void testShowTaskListWithTasks() throws NimbusException {
         Task task1 = new Todo("Read book");
-        Task task2 = new Deadline("Submit report", "Feb 28 2025");
+        Task task2 = new Deadline("Submit report", "Feb 28 2025 1800");
 
         taskList.add(task1);
         taskList.add(task2);
 
         String expected = "Here are the tasks in your list:\n" +
                 "1. [T][ ] Read book\n" +
-                "2. [D][ ] Submit report (by: Feb 28 2025)";
+                "2. [D][ ] Submit report (by: Feb 28 2025, 6:00 pm)";
         assertEquals(expected, ui.showTaskList(taskList));
     }
 
@@ -105,15 +105,15 @@ public class UITest {
     @Test
     void testShowTasksOnDate_WithTasks() throws NimbusException {
         LocalDate searchDate = LocalDate.of(2025, 2, 20);
-        Deadline deadline = new Deadline("Submit report", "20/02/2025");
+        Deadline deadline = new Deadline("Submit report", "20/02/2025 1800");
         Event event = new Event("Project Meeting", "20/02/2025 1000", "20/02/2025 1200");
 
         taskList.add(deadline);
         taskList.add(event);
 
         String expected = "Tasks on Feb 20 2025:\n" +
-                "  [D][ ] Submit report (by: Feb 20 2025)\n" +
-                "  [E][ ] Project Meeting (from: Feb 20 2025 10:00 to: Feb 20 2025 12:00)";
+                "  [D][ ] Submit report (by: Feb 20 2025, 6:00 pm)\n" +
+                "  [E][ ] Project Meeting (from: Feb 20 2025, 10:00 am to: Feb 20 2025, 12:00 pm)";
         assertEquals(expected, UI.showTasksOnDate(searchDate, taskList));
     }
 
@@ -125,18 +125,18 @@ public class UITest {
 
     @Test
     void testShowMatchingTasks_WithMatches() throws NimbusException {
-        Task task = new Deadline("Submit report", "Feb 28 2025");
+        Task task = new Deadline("Submit report", "Feb 28 2025 1800");
         taskList.add(task);
 
         String expected = "Here are the matching tasks for \"report\":\n" +
-                "1. [D][ ] Submit report (by: Feb 28 2025)";
+                "1. [D][ ] Submit report (by: Feb 28 2025, 6:00 pm)";
         assertEquals(expected, ui.showMatchingTasks(taskList, "report"));
     }
 
     @Test
     void testShowSortedTasks() throws NimbusException {
         Task task1 = new Todo("Read book");
-        Task task2 = new Deadline("Submit report", "Feb 28 2025");
+        Task task2 = new Deadline("Submit report", "Feb 28 2025 1800");
 
         ArrayList<Task> sortedTasks = new ArrayList<>();
         sortedTasks.add(task1);
@@ -144,7 +144,7 @@ public class UITest {
 
         String expected = "Tasks sorted successfully:\n" +
                 "1. [T][ ] Read book\n" +
-                "2. [D][ ] Submit report (by: Feb 28 2025)";
+                "2. [D][ ] Submit report (by: Feb 28 2025, 6:00 pm)";
         assertEquals(expected, ui.showSortedTasks(sortedTasks));
     }
 }
