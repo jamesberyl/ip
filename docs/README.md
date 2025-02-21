@@ -1,6 +1,6 @@
 # Nimbus User Guide
 
-![Product Screenshot](Ui.png)
+![Product Screenshot](UI.png)
 
 > “The secret of getting ahead is getting started.” – Mark Twain
 
@@ -10,26 +10,6 @@ Nimbus frees your mind of having to remember things you need to do. It is:
 - ~~slow~~ **SUPER FAST** 🚀 to use
 
 And it is **FREE**!
-
----
-
-## Command List
-| Command                                              | Description                              |
-|------------------------------------------------------|------------------------------------------|
-| `list`                                               | Lists all tasks                          |
-| `todo <task>`                                        | Adds a Todo task                         |
-| `deadline <task> /by <date> <time>`                  | Adds a Deadline task                     |
-| `event <task> /from <date> <time> /to <date> <time>` | Adds an Event task                       |
-| `mark <task number>`                                 | Marks a task as done                     |
-| `unmark <task number>`                               | Marks a task as not done                 |
-| `delete <task number>`                               | Deletes task by number                   |
-| `find_date <date>`                                   | Finds tasks that fall on a specific date |
-| `find <keyword>`                                     | Finds tasks matching the keyword         |
-| `clear`                                              | Clears all tasks                         |
-| `sort`                                               | Sorts tasks by date                      |
-| `bye`                                                | Exits the program                        |
-
----
 
 ## Features
 
