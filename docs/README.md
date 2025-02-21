@@ -1,6 +1,6 @@
 # Nimbus User Guide
 
-![Product Screenshot](UI.png)
+![Product Screenshot](Ui.png)
 
 > “The secret of getting ahead is getting started.” – Mark Twain
 
