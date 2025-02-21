@@ -164,6 +164,6 @@ public class UI {
         for (int i = 0; i < sortedTasks.size(); i++) {
             response.append((i + 1)).append(". ").append(sortedTasks.get(i)).append("\n");
         }
-        return response.toString();
+        return response.toString().trim();
     }
 }
