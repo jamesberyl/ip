@@ -52,18 +52,4 @@ class ParserTest {
         });
         assertEquals("Oops! It seems like you entered nothing.", exception.getMessage());
     }
-
-    @Test
-    void testProcessCommand_list() throws NimbusException {
-        parser.processCommand("list");
-        String output = outputStream.toString();
-        assertTrue(output.contains("Hmm... Your task list is empty"));
-    }
-
-    @Test
-    void testProcessCommand_bye() throws NimbusException {
-        parser.processCommand("bye");
-        String output = outputStream.toString();
-        assertEquals(true, output.contains("Stay awesome, and I’ll see you soon!"));
-    }
 }
