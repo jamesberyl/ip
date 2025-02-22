@@ -11,10 +11,10 @@ import nimbus.exceptions.NimbusException;
 
 /**
  * Represents a Deadline task in the Nimbus Chatbot application.
- * A Deadline task has a description and a specific date and time by which it must be completed.
+ * A Deadline task has a description and a specific date and time dueDateTime which it must be completed.
  */
 public class Deadline extends Task {
-    private LocalDateTime by;
+    private final LocalDateTime dueDateTime;
     private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mm a");
     private static final List<DateTimeFormatter> INPUT_FORMATS = Arrays.asList(
             DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm"),
@@ -27,16 +27,16 @@ public class Deadline extends Task {
      * Constructs a Deadline task with the specified description and due date/time.
      *
      * @param description The description of the task.
-     * @param by The due date and time in a supported format.
+     * @param dueDateTime The due date and time in a supported format.
      * @throws NimbusException If the date/time format is invalid.
      */
-    public Deadline(String description, String by) throws NimbusException {
+    public Deadline(String description, String dueDateTime) throws NimbusException {
         super(description);
-        this.by = parseDateTime(by);
+        this.dueDateTime = parseDateTime(dueDateTime);
     }
 
-    public LocalDateTime getBy() {
-        return by;
+    public LocalDateTime getDueDateTime() {
+        return dueDateTime;
     }
 
     /**
@@ -69,7 +69,7 @@ public class Deadline extends Task {
      */
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + by.format(OUTPUT_FORMAT) + ")";
+        return "[D]" + super.toString() + " (dueDateTime: " + dueDateTime.format(OUTPUT_FORMAT) + ")";
     }
 
     /**
@@ -79,7 +79,7 @@ public class Deadline extends Task {
      */
     @Override
     public String toFileString() {
-        return "D | " + (isDone ? "1" : "0") + " | " + description + " | " + by.format(INPUT_FORMATS.get(0));
+        return "D | " + (isDone ? "1" : "0") + " | " + description + " | " + dueDateTime.format(INPUT_FORMATS.get(0));
     }
 
     /**
@@ -89,6 +89,6 @@ public class Deadline extends Task {
      * @return True if the task is scheduled on the specified date, false otherwise.
      */
     public boolean isOnDate(LocalDateTime date) {
-        return by.toLocalDate().equals(date.toLocalDate());
+        return dueDateTime.toLocalDate().equals(date.toLocalDate());
     }
 }
