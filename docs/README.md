@@ -43,34 +43,34 @@ Expected output:
 ```
 Got it. I've added this task:
   [T][ ] Buy groceries
-Now you have 1 task in the list.
+Now you have 1 tasks in the list.
 ```
 
 ### 3. Add Deadline Task
 
-**Usage:** `deadline <task description> /by <date>`  
-**Example:** `deadline Submit report /by 2024-02-25`
+**Usage:** `deadline <task description> /by <date> <time>`  
+**Example:** `deadline Submit report /by 2024-02-25 2359`
 
 Adds a task with a specific deadline.
 
 Expected output:
 ```
 Got it. I've added this task:
-  [D][ ] Submit report (by: Feb 25 2024)
+  [D][ ] Submit report (by: Feb 25 2024, 11:59 pm)
 Now you have 2 tasks in the list.
 ```
 
 ### 4. Add Event Task
 
 **Usage:** `event <task description> /from <start time> /to <end time>`  
-**Example:** `event Project meeting /from 2024-02-26 10:00 /to 2024-02-26 12:00`
+**Example:** `event Project meeting /from 2024-02-26 1000 /to 2024-02-26 1200`
 
 Adds an event task with a start and end time.
 
 Expected output:
 ```
 Got it. I've added this task:
-  [E][ ] Project meeting (from: Feb 26 2024 10:00 to: Feb 26 2024 12:00)
+  [E][ ] Project meeting (from: Feb 26 2024, 10:00 am to: Feb 26 2024, 12:00 pm)
 Now you have 3 tasks in the list.
 ```
 
@@ -110,7 +110,7 @@ Removes a task from the list.
 Expected output:
 ```
 Noted. I've removed this task:
-  [D][ ] Submit report (by: Feb 25 2024)
+  [D][ ] Submit report (by: Feb 25 2024, 11:59 pm)
 Now you have 2 tasks in the list.
 ```
 
@@ -124,7 +124,7 @@ Finds all tasks occurring on a specific date.
 Expected output:
 ```
 Tasks on Feb 26 2024:
-  [E][ ] Project meeting (from: Feb 26 2024 10:00 to: Feb 26 2024 12:00)
+  [E][ ] Project meeting (from: Feb 26 2024, 10:00 am to: Feb 26 2024, 12:00 pm)
 ```
 
 ### 9. Find Tasks by Keyword
@@ -137,7 +137,7 @@ Finds tasks that contain the specified keyword.
 Expected output:
 ```
 Here are the matching tasks for "meeting":
-1. [E][ ] Project meeting (from: Feb 26 2024 10:00 to: Feb 26 2024 12:00)
+1. [E][ ] Project meeting (from: Feb 26 2024, 10:00 am to: Feb 26 2024, 12:00 pm)
 ```
 
 ### 10. Clear All Tasks
@@ -163,7 +163,7 @@ Sorts tasks in chronological order:
 Expected output:
 ```
 Tasks sorted successfully:
-1. [E][ ] Project meeting (from: Feb 26 2024 10:00 to: Feb 26 2024 12:00)
+1. [E][ ] Project meeting (from: Feb 26 2024, 10:00 am to: Feb 26 2024, 12:00 pm)
 2. [T][ ] Buy groceries
 ```
 
