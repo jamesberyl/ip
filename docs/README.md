@@ -24,8 +24,8 @@ Expected output (when tasks exist):
 ```
 Here are the tasks in your list:
 1. [T][ ] Read book
-2. [D][ ] Submit assignment (by: Dec 01 2023 2:00 pm)
-3. [E][ ] Team meeting (from: Nov 30 2023 2:00 pm to: Nov 30 2023 4:00 pm)
+2. [D][ ] Submit assignment (by: Dec 01 2023, 2:00 pm)
+3. [E][ ] Team meeting (from: Nov 30 2023, 2:00 pm to: Nov 30 2023, 4:00 pm)
 ```
 Expected output (when no tasks exist):
 ```
