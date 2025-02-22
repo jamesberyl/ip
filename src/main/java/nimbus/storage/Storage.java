@@ -104,33 +104,41 @@ public class Storage {
         }
 
         String type = parts[0].trim();
+        String status = parts[1].trim();
         String description = parts[2].trim();
+        Task task;
 
         try {
             switch (type) {
             case "T":
-                return new Todo(description);
-
+                task = new Todo(description);
+                break;
             case "D":
                 if (parts.length < 4) {
                     throw new NimbusException("Invalid deadline format: " + line);
                 }
                 String deadline = parts[3].trim();
-                return new Deadline(description, deadline);
-
+                task = new Deadline(description, deadline);
+                break;
             case "E":
                 if (parts.length < 5) {
                     throw new NimbusException("Invalid event format: " + line);
                 }
                 String startTime = parts[3].trim();
                 String endTime = parts[4].trim();
-                return new Event(description, startTime, endTime);
-
+                task = new Event(description, startTime, endTime);
+                break;
             default:
                 throw new NimbusException("Unknown task type: " + line);
             }
         } catch (Exception e) {
             throw new NimbusException("Error parsing task: " + e.getMessage());
         }
+
+        if (status.equals("1")) {
+            task.markAsDone();
+        }
+
+        return task;
     }
 }
