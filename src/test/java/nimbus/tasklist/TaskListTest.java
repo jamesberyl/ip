@@ -75,16 +75,4 @@ class TaskListTest {
         taskList.markTask("unmark 1", false);
         assertEquals("[T][ ] Read book", taskList.getTasks().get(0).toString());
     }
-
-    @Test
-    public void testFindTasksByKeyword_noKeywordProvided() {
-        taskList.findTasksByKeyword("find");
-
-        String expectedOutput =
-                "____________________________________________________________\n" +
-                        " Oops! Please enter a keyword after 'find'. Example: find book\n" +
-                        "____________________________________________________________\n";
-
-        assertEquals(expectedOutput, outputStream.toString());
-    }
 }

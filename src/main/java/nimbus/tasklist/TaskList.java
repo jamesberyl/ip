@@ -248,15 +248,15 @@ public class TaskList {
     public String sortTasks() {
         tasks.sort(Comparator.comparing((Task task) -> {
             if (task instanceof Event event) {
-                return event.getFrom(); // Sort Events by start time
+                return event.getFromDateTime(); // Sort Events by start time
             } else if (task instanceof Deadline deadline) {
-                return deadline.getBy(); // Sort Deadlines by due date
+                return deadline.getDueDateTime(); // Sort Deadlines by due date
             } else {
                 return task.getCreatedAt(); // Sort Todos by creation time
             }
         }).thenComparing(task -> {
             if (task instanceof Event event) {
-                return event.getTo(); // Sort Events by end time (breaking ties)
+                return event.getToDateTime(); // Sort Events by end time (breaking ties)
             } else {
                 return LocalDateTime.MAX; // Assign max value to ensure Todo tasks don't interfere
             }

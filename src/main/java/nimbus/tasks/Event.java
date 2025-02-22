@@ -13,8 +13,8 @@ import nimbus.exceptions.NimbusException;
  * An Event task has a description, a start date and time, and an end date and time.
  */
 public class Event extends Task {
-    private LocalDateTime from;
-    private LocalDateTime to;
+    private LocalDateTime fromDateTime;
+    private LocalDateTime toDateTime;
     private static final List<DateTimeFormatter> INPUT_FORMATS = Arrays.asList(
             DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm"),
             DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm"),
@@ -33,23 +33,23 @@ public class Event extends Task {
      */
     public Event(String description, String from, String to) throws NimbusException {
         super(description);
-        this.from = parseDateTime(from);
-        this.to = parseDateTime(to);
+        this.fromDateTime = parseDateTime(from);
+        this.toDateTime = parseDateTime(to);
     }
 
-    public LocalDateTime getFrom() {
-        return from;
+    public LocalDateTime getFromDateTime() {
+        return fromDateTime;
     }
 
-    public LocalDateTime getTo() {
-        return to;
+    public LocalDateTime getToDateTime() {
+        return toDateTime;
     }
 
     /**
      * Parses the date and time string into a LocalDateTime object.
      * Supports multiple date/time formats.
      *
-     * @param dateTimeString The date and time string to parse.
+     * @param dateTimeString The date and time string toDateTime parse.
      * @return The parsed LocalDateTime object.
      * @throws NimbusException If the date/time format is invalid.
      */
@@ -75,7 +75,7 @@ public class Event extends Task {
      */
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + from.format(OUTPUT_FORMAT) + " to: " + to.format(OUTPUT_FORMAT) + ")";
+        return "[E]" + super.toString() + " (from: " + fromDateTime.format(OUTPUT_FORMAT) + " toDateTime: " + toDateTime.format(OUTPUT_FORMAT) + ")";
     }
 
     /**
@@ -85,16 +85,16 @@ public class Event extends Task {
      */
     @Override
     public String toFileString() {
-        return "E | " + (isDone ? "1" : "0") + " | " + description + " | " + from.format(INPUT_FORMATS.get(0)) + " | " + to.format(INPUT_FORMATS.get(0));
+        return "E | " + (isDone ? "1" : "0") + " | " + description + " | " + fromDateTime.format(INPUT_FORMATS.get(0)) + " | " + toDateTime.format(INPUT_FORMATS.get(0));
     }
 
     /**
      * Checks if the Event task occurs on the specified date.
      *
-     * @param date The date to check against the event's start and end dates.
+     * @param date The date toDateTime check against the event's start and end dates.
      * @return True if the event occurs on the specified date, false otherwise.
      */
     public boolean isOnDate(LocalDateTime date) {
-        return from.toLocalDate().equals(date.toLocalDate()) || to.toLocalDate().equals(date.toLocalDate());
+        return fromDateTime.toLocalDate().equals(date.toLocalDate()) || toDateTime.toLocalDate().equals(date.toLocalDate());
     }
 }

@@ -40,6 +40,7 @@ public class Main extends Application {
             assert ap != null : "Failed to load AnchorPane from FXML";
 
             Scene scene = new Scene(ap);
+            stage.setTitle("Nimbus - Your friendly TaskManager");
             stage.setScene(scene);
 
             assert fxmlLoader.getController() != null : "FXML controller is not initialized";
