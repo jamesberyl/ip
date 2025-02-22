@@ -69,7 +69,7 @@ public class Deadline extends Task {
      */
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (dueDateTime: " + dueDateTime.format(OUTPUT_FORMAT) + ")";
+        return "[D]" + super.toString() + " (by: " + dueDateTime.format(OUTPUT_FORMAT) + ")";
     }
 
     /**
