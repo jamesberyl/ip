@@ -9,7 +9,20 @@ Nimbus frees your mind of having to remember things you need to do. It is:
 - *cross-platform* compatible
 - ~~slow~~ **SUPER FAST** 🚀 to use
 
-And it is **FREE**!
+And it is **FREE**!  
+
+## Prerequirements To Run Application
+
+- Java 17 must be installed
+
+## How To Run The Application
+
+1. Download the latest release file (it is a **.jar** file).
+2. Copy the **.jar** file into a preferably empty folder.
+3. Double-click the **.jar** file to run the application. Alternatively, you can change the directory to the folder where the **.jar** file is located and enter:
+   ```
+   java -jar nimbus.jar
+   ```
 
 ## Features
 
